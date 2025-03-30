@@ -1,13 +1,18 @@
 package com.grid.inventorymanager.service;
 
+import java.util.Optional;
 import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.repository.EmployeeRepository;
+import org.springframework.stereotype.Service;
+
+
+import java.util.List;
 
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    private EmployeeRepository(EmployeeRepository employeeRepository){
+    public EmployeeService(EmployeeRepository employeeRepository){
         this.employeeRepository=employeeRepository;
     }
 
@@ -15,6 +20,22 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Optional<Employee> findBy
+    public Optional<Employee> findById(Integer id){
+        return employeeRepository.findById(id);
+    }
+
+    public List<Employee> findAll(){
+        return employeeRepository.findAll();
+    }
+
+    public Employee update(Employee employee){
+        return employeeRepository.save(employee);
+    }
+
+    public void deletedById(Integer id){
+        employeeRepository.deleteById(id);
+    }
+
+
 
 }
