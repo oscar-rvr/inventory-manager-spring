@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
@@ -29,13 +30,12 @@ public class Employee {
 
     private String name;
     private String mail;
-    public Employee(String name, String mail) {
-        this.name = name;
-        this.mail = mail;
-    }
-/*
+
     //Relacion con movimientos
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AssetMovements> assetMovements;
-    */
+
+
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    private User user;
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class EmployeeService {
@@ -26,6 +28,7 @@ public class EmployeeService {
 
     public List<Employee> findAll(){
         return employeeRepository.findAll();
+
     }
 
     public Employee update(Employee employee){
