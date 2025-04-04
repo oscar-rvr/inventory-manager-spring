@@ -27,6 +27,6 @@ public class Vendor {
     private String name;
     private String contact;
 
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Purchase> purchases;
 }
