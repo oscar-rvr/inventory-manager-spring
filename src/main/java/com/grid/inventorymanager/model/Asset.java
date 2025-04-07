@@ -9,13 +9,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Profile;
 
 import java.util.List;
 
 @Entity
+@Table(name = "asset")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
