@@ -24,8 +24,8 @@ public class Vendor {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // La base de datos autogenerará el valor del ID
     private Integer id;
 
-    private String name; // Nombre del proveedor
-    private String contact; // Información de contacto del proveedor
+    private String name;
+    private String contact;
 
     // Relación de uno a muchos con la clase 'Purchase'
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)

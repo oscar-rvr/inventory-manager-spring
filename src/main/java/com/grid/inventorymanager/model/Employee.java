@@ -1,13 +1,6 @@
 package com.grid.inventorymanager.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,4 +31,8 @@ public class Employee {
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private User user;
+    // Adding role field with enum mapping
+
+    @Enumerated(EnumType.STRING) // This ensures that the role is stored as a string in the database
+    private Role role; // The Role enum
 }
