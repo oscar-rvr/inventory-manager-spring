@@ -3,6 +3,8 @@ package com.grid.inventorymanager.service;
 import java.util.Optional;
 import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -11,12 +13,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class EmployeeService {
+@RequiredArgsConstructor
+public class EmployeeService{
     private final EmployeeRepository employeeRepository;
-
-    public EmployeeService(EmployeeRepository employeeRepository){
-        this.employeeRepository=employeeRepository;
-    }
 
     public Employee create(Employee employee){
         return employeeRepository.save(employee);

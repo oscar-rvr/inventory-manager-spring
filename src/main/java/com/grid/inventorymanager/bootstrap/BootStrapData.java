@@ -6,25 +6,25 @@ import com.grid.inventorymanager.model.Role;
 import com.grid.inventorymanager.model.User;
 import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import com.grid.inventorymanager.service.EmployeeService;
 @Component
+@RequiredArgsConstructor
 public class BootStrapData implements CommandLineRunner {
 
-    private final EmployeeRepository employeeRepository;
-private final UserRepository userRepository;
-    public BootStrapData(EmployeeRepository employeeRepository, UserRepository userRepository){
-        this.employeeRepository=employeeRepository;
-        this.userRepository=userRepository;
-    }
+    private final EmployeeService employeeService;
+
+
+
 
     @Override
     public void run(String... args){
         //crear un empleado
-        Employee emp = Employee.builder().name("Daniel").mail("danieqqqqAASDAl@ti2.com").build();
+        Employee emp = Employee.builder().name("Daniel").mail("testesto772ss2@testeo").build();
         Employee saved = employeeService.create(emp);
-        System.out.println("EMpleado guardado " + saved);
+        System.out.println("Empleado guardado " + saved);
 
     }
 
