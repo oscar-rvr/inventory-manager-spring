@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Profile;
 import java.util.List;
 
 @Entity
-@Table(name = "asset")
+@Table(name = "assets")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor

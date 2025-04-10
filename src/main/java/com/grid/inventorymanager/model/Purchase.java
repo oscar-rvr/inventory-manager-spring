@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 import java.util.List;
-//@Profile("dev")
 @Entity
 @Data // Genera automáticamente los getters, setters, toString, equals, y hashCode
 @Table(name = "purchases") // Especifica el nombre de la tabla en la base de datos

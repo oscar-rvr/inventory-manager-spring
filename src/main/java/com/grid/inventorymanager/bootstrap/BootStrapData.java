@@ -1,6 +1,5 @@
 package com.grid.inventorymanager.bootstrap;
 
-
 import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.model.Role;
 import com.grid.inventorymanager.model.User;
@@ -16,18 +15,13 @@ public class BootStrapData implements CommandLineRunner {
 
     private final EmployeeService employeeService;
 
-
-
-
     @Override
     public void run(String... args){
         //crear un empleado
-        Employee emp = Employee.builder().name("Daniel").mail("testesto772ss2@testeo").build();
+        Employee emp = Employee.builder().name("Daniel").mail("testestoggkkkkss2@testeo").build();
         Employee saved = employeeService.create(emp);
         System.out.println("Empleado guardado " + saved);
 
     }
-
-
 
 }

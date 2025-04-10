@@ -30,4 +30,5 @@ public class Computer extends Asset {
     private String shellState;
 
     private String comments;
+
 }

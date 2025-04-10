@@ -12,7 +12,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Profile;
 
-//@Profile("dev")
 @Entity
 @Table(name = "purchase_details")
 @Data

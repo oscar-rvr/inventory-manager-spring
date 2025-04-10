@@ -21,8 +21,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssetMovements
-{
+public class AssetMovements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

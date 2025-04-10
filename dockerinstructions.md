@@ -15,3 +15,9 @@ Para levantar el contenedor de desarollo solo necesitas usar el comando de siemp
 ```
 docker-compose up
 ```
+
+## LOCAL
+Para usar el perfil local que funciona con h2, se cambia en properties el activo y se accede con 
+``` 
+http://localhost:8079/h2-console
+```
