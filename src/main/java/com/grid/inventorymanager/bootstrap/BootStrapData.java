@@ -17,11 +17,9 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        //crear un empleado
         Employee emp = Employee.builder().name("Daniel").mail("testestoggkkkkss2@testeo").build();
         Employee saved = employeeService.create(emp);
         System.out.println("Empleado guardado " + saved);
-
     }
 
 }

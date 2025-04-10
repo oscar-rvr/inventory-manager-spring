@@ -24,15 +24,12 @@ public class Employee {
     private String name;
     private String mail;
 
-    //Relacion con movimientos
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AssetMovements> assetMovements;
 
-
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private User user;
-    // Adding role field with enum mapping
 
-    @Enumerated(EnumType.STRING) // This ensures that the role is stored as a string in the database
-    private Role role; // The Role enum
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

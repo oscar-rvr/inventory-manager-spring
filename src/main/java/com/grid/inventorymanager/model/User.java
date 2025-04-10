@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Profile;
 
 @Entity
-@Table(name = "users") // Mapea a la tabla users
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
