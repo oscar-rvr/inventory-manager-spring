@@ -9,9 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
@@ -21,6 +19,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString(exclude = "employee")
 public class AssetMovements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

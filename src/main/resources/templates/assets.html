@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados</title>
+</head>
+<body>
+<h1>Lista de empleados</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>SERIES_NUMBER</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="asset : ${assets}">
+        <td th:text="${asset.id}">1</td>
+        <td th:text="${asset.name}">Oscar</td>
+        <td th:text="${asset.description}">oscar@ti.com</td>
+        <td th:text="${asset.seriesNumber}">oscar@ti.com</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,32 +1,23 @@
 package com.grid.inventorymanager.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Profile;
+import jakarta.persistence.*;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.util.List;
+
 @Entity
-@Data
 @Table(name = "purchases")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
 
     @ManyToOne
     @JoinColumn(name = "vendor_id", nullable = false)
@@ -36,6 +27,15 @@ public class Purchase {
     private Double totalAmount;
 
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-
+    @JsonIgnore
     private List<PurchaseDetail> purchaseDetails;
+
+    @Override
+    public String toString() {
+        return "Purchase(id=" + id +
+                ", vendor=" + (vendor != null ? vendor.getName() : "null") +
+                ", date=" + date +
+                ", totalAmount=" + totalAmount + ")";
+    }
+
 }

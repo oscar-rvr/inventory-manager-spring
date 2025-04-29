@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.context.annotation.Profile;
 
 @Entity
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Profile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @PrimaryKeyJoinColumn(name = "asset_id")
 public class Computer extends Asset {
     private Integer ram;
