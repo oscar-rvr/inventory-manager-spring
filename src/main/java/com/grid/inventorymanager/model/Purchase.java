@@ -1,8 +1,11 @@
 package com.grid.inventorymanager.model;
 
-import jakarta.persistence.*;
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Purchase {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -37,5 +39,4 @@ public class Purchase {
                 ", date=" + date +
                 ", totalAmount=" + totalAmount + ")";
     }
-
 }

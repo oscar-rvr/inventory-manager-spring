@@ -12,7 +12,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class PurchaseDetailController {
-
     private final PurchaseDetailService purchaseDetailService;
 
     @GetMapping("/purchaseDetails")

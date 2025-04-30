@@ -13,24 +13,23 @@ import java.util.Optional;
 public class ComputerService {
     private final ComputerRepository computerRepository;
 
-    public Computer create(Computer computer){
+    public Computer create(Computer computer) {
         return computerRepository.save(computer);
     }
 
-    public Optional<Computer> findById (Integer id){
+    public Optional<Computer> findById(Integer id) {
         return computerRepository.findById(id);
     }
 
-    public List<Computer> findAll(){
+    public List<Computer> findAll() {
         return computerRepository.findAll();
     }
 
-    public void update (Computer computer){
+    public void update(Computer computer) {
         computerRepository.save(computer);
     }
 
-    public void deleteById(Integer id){
+    public void deleteById(Integer id) {
         computerRepository.deleteById(id);
     }
-
 }

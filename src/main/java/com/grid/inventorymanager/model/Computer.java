@@ -5,11 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.context.annotation.Profile;
 
 @Entity
 @Table(name = "computers")
@@ -33,5 +31,4 @@ public class Computer extends Asset {
     private String shellState;
 
     private String comments;
-
 }

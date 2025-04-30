@@ -1,16 +1,12 @@
 package com.grid.inventorymanager.service;
 
-import java.util.Optional;
 import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

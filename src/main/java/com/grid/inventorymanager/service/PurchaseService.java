@@ -1,10 +1,7 @@
 package com.grid.inventorymanager.service;
 
-import com.grid.inventorymanager.model.Asset;
 import com.grid.inventorymanager.model.Purchase;
 import com.grid.inventorymanager.repository.PurchaseRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +13,23 @@ import java.util.Optional;
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
 
-    public Purchase create(Purchase purchase){
+    public Purchase create(Purchase purchase) {
         return purchaseRepository.save(purchase);
     }
 
-    public Optional<Purchase> findById(Integer id){
+    public Optional<Purchase> findById(Integer id) {
         return purchaseRepository.findById(id);
     }
 
-    public List<Purchase> findAll(){
+    public List<Purchase> findAll() {
         return purchaseRepository.findAll();
     }
 
-    public Purchase update(Purchase purchase){
+    public Purchase update(Purchase purchase) {
         return purchaseRepository.save(purchase);
     }
 
-    public void deletedById(Integer id){
+    public void deletedById(Integer id) {
         purchaseRepository.deleteById(id);
     }
 

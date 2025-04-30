@@ -17,8 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class AssetControllerTest {
-
-
     @Autowired
     private MockMvc mockMvc;
 

@@ -1,13 +1,12 @@
 package com.grid.inventorymanager.model;
 
 import jakarta.persistence.*;
-import jdk.jfr.DataAmount;
 import lombok.*;
-import org.springframework.context.annotation.Profile;
 
 import java.util.List;
+
 @Entity
-@Table(name="employees")//Se mapea la tabla "employees"
+@Table(name = "employees")//Se mapea la tabla "employees"
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +14,6 @@ import java.util.List;
 @ToString(exclude = {"assetMovements", "user"})
 
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Id autoincrementable
     private Integer id;

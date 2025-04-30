@@ -1,6 +1,9 @@
 package com.grid.inventorymanager.controllers;
 
-import com.grid.inventorymanager.model.*;
+import com.grid.inventorymanager.model.Asset;
+import com.grid.inventorymanager.model.Purchase;
+import com.grid.inventorymanager.model.PurchaseDetail;
+import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.AssetRepository;
 import com.grid.inventorymanager.repository.PurchaseDetailRepository;
 import com.grid.inventorymanager.repository.PurchaseRepository;

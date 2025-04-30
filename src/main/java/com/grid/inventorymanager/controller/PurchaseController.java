@@ -12,12 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @Controller
 public class PurchaseController {
-private final PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
 
-@GetMapping("/purchases")
-public String findAll(Model model){
-    List<Purchase> purchases = purchaseService.findAll();
-    model.addAttribute("purchases",purchases);
-    return "purchases";
-}
+    @GetMapping("/purchases")
+    public String findAll(Model model) {
+        List<Purchase> purchases = purchaseService.findAll();
+        model.addAttribute("purchases", purchases);
+        return "purchases";
+    }
 }

@@ -15,9 +15,9 @@ public class AssetMovementsController {
     private final AssetMovementsService assetMovementsService;
 
     @GetMapping("/assetMovements")
-    public String showAssetMovements(Model model){
+    public String showAssetMovements(Model model) {
         List<AssetMovements> assetMovements = assetMovementsService.findAll();
-        model.addAttribute("assetMovements",assetMovements);
+        model.addAttribute("assetMovements", assetMovements);
 
         return "assetMovements";
     }

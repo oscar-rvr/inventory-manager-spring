@@ -11,26 +11,25 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AssetService {
-private final AssetRepository assetRepository;
+    private final AssetRepository assetRepository;
 
-public Asset create(Asset asset){
-return assetRepository.save(asset);
-}
+    public Asset create(Asset asset) {
+        return assetRepository.save(asset);
+    }
 
-public Optional<Asset> findBy(Integer id){
-    return assetRepository.findById(id);
-}
+    public Optional<Asset> findBy(Integer id) {
+        return assetRepository.findById(id);
+    }
 
-public List<Asset> findAll(){
-    return assetRepository.findAll();
-}
+    public List<Asset> findAll() {
+        return assetRepository.findAll();
+    }
 
-public Asset update(Asset asset){
-    return assetRepository.save(asset);
-}
+    public Asset update(Asset asset) {
+        return assetRepository.save(asset);
+    }
 
-public void deletedById(Integer id){
-    assetRepository.deleteById(id);
-}
-
+    public void deletedById(Integer id) {
+        assetRepository.deleteById(id);
+    }
 }

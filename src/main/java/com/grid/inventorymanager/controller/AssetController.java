@@ -15,9 +15,9 @@ public class AssetController {
     private final AssetService assetService;
 
     @GetMapping("/assets")
-    public String showAssets(Model model){
+    public String showAssets(Model model) {
         List<Asset> assets = assetService.findAll();
-        model.addAttribute("assets",assets);
+        model.addAttribute("assets", assets);
         return "assets";
     }
 }

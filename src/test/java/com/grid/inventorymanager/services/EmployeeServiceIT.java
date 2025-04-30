@@ -1,5 +1,5 @@
 package com.grid.inventorymanager.services;
 
-public class EmployeeServiceIT  {
+public class EmployeeServiceIT {
 
 }

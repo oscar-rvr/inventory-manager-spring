@@ -12,7 +12,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class VendorController {
-
     private final VendorService vendorService;
 
     @GetMapping("/vendors")

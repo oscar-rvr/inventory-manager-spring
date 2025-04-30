@@ -1,11 +1,10 @@
 package com.grid.inventorymanager.bootstrap;
 
 import com.grid.inventorymanager.model.*;
-import com.grid.inventorymanager.repository.EmployeeRepository;
-import com.grid.inventorymanager.repository.UserRepository;
 import com.grid.inventorymanager.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,6 +12,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Profile("!test")
 public class BootStrapData implements CommandLineRunner {
 
     private final EmployeeService employeeService;
@@ -20,12 +20,12 @@ public class BootStrapData implements CommandLineRunner {
     private final AssetMovementsService assetMovementsService;
     private final ComputerService computerService;
     private final PurchaseService purchaseService;
-    private final VendorService vendorService; // Asegúrate de tener el servicio de Vendor
+    private final VendorService vendorService;
     private final UserService userService;
 
     @Override
-    public void run(String... args){
-        /*
+    public void run(String... args) {
+
         // Crear empleado
         Employee emp = Employee.builder().name("Alejandro").mail("Alejandro@dev.com").build();
         Employee empSaved = employeeService.create(emp);
@@ -34,14 +34,14 @@ public class BootStrapData implements CommandLineRunner {
         // Crear asset
         Asset asset = Asset.builder().name("mouse").description("inalambrico").seriesNumber("123456").build();
         Asset assetSaved = assetService.create(asset);
-        System.out.println("Asset Guardado "+ assetSaved);
+        System.out.println("Asset Guardado " + assetSaved);
 
         // Crear asset movement
         AssetMovements assetMovements = AssetMovements.builder()
                 .employee(empSaved)
                 .asset(assetSaved)
                 .movementType(MovementType.ASSIGN)
-                .assetMovementDate(LocalDate.of(2024,12,12))
+                .assetMovementDate(LocalDate.of(2024, 12, 12))
                 .build();
         AssetMovements assetMovementsSaved = assetMovementsService.create(assetMovements);
         System.out.println("Asset Movement guardado " + assetMovementsSaved);
@@ -97,10 +97,7 @@ public class BootStrapData implements CommandLineRunner {
                 .build();
         User savedUser = userService.create(user);
         System.out.println("Usuario guardado: " + savedUser);
-        */
 
-  }
-
-
+    }
 
 }

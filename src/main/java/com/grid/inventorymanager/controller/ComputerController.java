@@ -15,9 +15,9 @@ public class ComputerController {
     private final ComputerService computerService;
 
     @GetMapping("/computers")
-    public String findAll(Model model){
+    public String findAll(Model model) {
         List<Computer> computers = computerService.findAll();
-        model.addAttribute("computers",computers);
+        model.addAttribute("computers", computers);
         return "computers";
     }
 }
