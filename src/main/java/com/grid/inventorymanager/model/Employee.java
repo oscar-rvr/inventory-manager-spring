@@ -12,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "assetMovements")
+@ToString(exclude = {"assetMovements", "user"})
+
 public class Employee {
 
     @Id

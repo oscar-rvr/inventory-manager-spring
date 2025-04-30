@@ -1,7 +1,8 @@
 package com.grid.inventorymanager.controllers;
 
-import com.grid.inventorymanager.model.Asset;
-import com.grid.inventorymanager.repository.AssetRepository;
+import com.grid.inventorymanager.model.Employee;
+import com.grid.inventorymanager.model.Role;
+import com.grid.inventorymanager.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,30 +17,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class AssetControllerTest {
-
+class EmployeeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private AssetRepository assetRepository;
+    private EmployeeRepository employeeRepository;
 
     @BeforeEach
     void setup() {
-        assetRepository.deleteAll();
-        assetRepository.save(Asset.builder()
-                .name("Laptop")
-                .description("HP Elitebook")
-                .seriesNumber("SN123")
+        employeeRepository.deleteAll();
+
+        employeeRepository.save(Employee.builder()
+                .name("Oscar Dev")
+                .mail("oscar@example.com")
+                .role(Role.ADMIN)
                 .build());
     }
 
     @Test
-    void whenGetAssets_thenReturnsAssetsViewWithModel() throws Exception {
-        mockMvc.perform(get("/assets"))
+    void whenGetEmployees_thenReturnsViewWithModel() throws Exception {
+        mockMvc.perform(get("/employees"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("assets"))
-                .andExpect(model().attributeExists("assets"));
+                .andExpect(view().name("employees"))
+                .andExpect(model().attributeExists("employees"));
     }
 }

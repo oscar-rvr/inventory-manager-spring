@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 class InventoryManagerSpringApplicationTests {
-/*
+
 	@Autowired
 	private AssetController assetController;
 
@@ -64,6 +64,6 @@ class InventoryManagerSpringApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-*/
+
 
 }

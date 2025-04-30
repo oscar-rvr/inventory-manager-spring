@@ -10,10 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.context.annotation.Profile;
 
 @Entity
@@ -22,6 +19,8 @@ import org.springframework.context.annotation.Profile;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "employee")
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
