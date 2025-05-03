@@ -17,7 +17,7 @@ public class AssetService {
         return assetRepository.save(asset);
     }
 
-    public Optional<Asset> findBy(Integer id) {
+    public Optional<Asset> findBy(Long id) {
         return assetRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class AssetService {
         return assetRepository.save(asset);
     }
 
-    public void deletedById(Integer id) {
+    public void deletedById(Long id) {
         assetRepository.deleteById(id);
     }
 }

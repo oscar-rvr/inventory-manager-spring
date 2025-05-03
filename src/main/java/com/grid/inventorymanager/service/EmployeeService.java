@@ -17,7 +17,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Optional<Employee> findById(Integer id) {
+    public Optional<Employee> findById(Long id) {
         return employeeRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public void deletedById(Integer id) {
+    public void deletedById(Long id) {
         employeeRepository.deleteById(id);
     }
 }

@@ -17,7 +17,7 @@ public class AssetMovementsService {
         return assetMovementsRepository.save(assetMovements);
     }
 
-    public Optional<AssetMovements> findById(Integer id) {
+    public Optional<AssetMovements> findById(Long id) {
         return assetMovementsRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class AssetMovementsService {
         return assetMovementsRepository.save(assetMovements);
     }
 
-    public void deletedById(Integer id) {
+    public void deletedById(Long id) {
         assetMovementsRepository.deleteById(id);
     }
 }

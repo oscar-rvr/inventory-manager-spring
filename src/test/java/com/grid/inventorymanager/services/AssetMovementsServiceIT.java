@@ -69,13 +69,13 @@ class AssetMovementsServiceIT {
     void whenCreate_thenPersistMovement() {
         AssetMovements saved = assetMovementsService.create(movement);
         assertThat(saved.getId()).isNotNull();
-        assertThat(assetMovementsRepository.findById(saved.getId())).isPresent();
+        assertThat(assetMovementsRepository.findById(saved.getId().getAssetId())).isPresent();
     }
 
     @Test
     void whenFindById_thenReturnsMovement() {
         AssetMovements saved = assetMovementsService.create(movement);
-        Optional<AssetMovements> found = assetMovementsService.findById(saved.getId());
+        Optional<AssetMovements> found = assetMovementsService.findById(saved.getId().getAssetId());
         assertThat(found).isPresent().contains(saved);
     }
 
@@ -92,14 +92,14 @@ class AssetMovementsServiceIT {
         saved.setMovementType(MovementType.ASSIGN);
         assetMovementsService.update(saved);
 
-        AssetMovements updated = assetMovementsRepository.findById(saved.getId()).orElseThrow();
+        AssetMovements updated = assetMovementsRepository.findById(saved.getId().getAssetId()).orElseThrow();
         assertThat(updated.getMovementType()).isEqualTo(MovementType.ASSIGN);
     }
 
     @Test
     void whenDelete_thenItIsRemoved() {
         AssetMovements saved = assetMovementsService.create(movement);
-        assetMovementsService.deletedById(saved.getId());
-        assertThat(assetMovementsRepository.findById(saved.getId())).isEmpty();
+        assetMovementsService.deletedById(saved.getId().getAssetId());
+        assertThat(assetMovementsRepository.findById(saved.getId().getAssetId())).isEmpty();
     }
 }

@@ -17,7 +17,7 @@ public class ComputerService {
         return computerRepository.save(computer);
     }
 
-    public Optional<Computer> findById(Integer id) {
+    public Optional<Computer> findById(Long id) {
         return computerRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class ComputerService {
         computerRepository.save(computer);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         computerRepository.deleteById(id);
     }
 }

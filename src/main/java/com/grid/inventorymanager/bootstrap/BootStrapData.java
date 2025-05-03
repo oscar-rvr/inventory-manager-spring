@@ -1,6 +1,7 @@
 package com.grid.inventorymanager.bootstrap;
 
 import com.grid.inventorymanager.model.*;
+import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -22,13 +23,15 @@ public class BootStrapData implements CommandLineRunner {
     private final PurchaseService purchaseService;
     private final VendorService vendorService;
     private final UserService userService;
+    private final EmployeeRepository employeeRepository;
 
     @Override
     public void run(String... args) {
 
+
         // Crear empleado
         Employee emp = Employee.builder().name("Alejandro").mail("Alejandro@dev.com").build();
-        Employee empSaved = employeeService.create(emp);
+        Employee empSaved = employeeRepository.save(emp);
         System.out.println("Empleado guardado " + empSaved);
 
         // Crear asset
@@ -37,14 +40,9 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Asset Guardado " + assetSaved);
 
         // Crear asset movement
-        AssetMovements assetMovements = AssetMovements.builder()
-                .employee(empSaved)
-                .asset(assetSaved)
-                .movementType(MovementType.ASSIGN)
-                .assetMovementDate(LocalDate.of(2024, 12, 12))
-                .build();
-        AssetMovements assetMovementsSaved = assetMovementsService.create(assetMovements);
-        System.out.println("Asset Movement guardado " + assetMovementsSaved);
+        assetSaved.addEmployee(empSaved, LocalDate.now(), MovementType.ASSIGN);
+        assetService.update(assetSaved);
+        System.out.println("Asset Movement guardado " + assetSaved.getEmployees());
 
         // Crear computadora
         Computer computer = Computer.builder()
@@ -54,8 +52,8 @@ public class BootStrapData implements CommandLineRunner {
                 .ram(12)
                 .disk(128)
                 .core("i9 12va")
-                .screenState("bueno")
-                .keyboardState("bueno")
+                .screenState("good")
+                .keyboardState("good")
                 .shellState("scratched")
                 .comments("need to go to maintainance")
                 .build();
@@ -64,7 +62,7 @@ public class BootStrapData implements CommandLineRunner {
 
         // Crear y guardar Vendor primero
         Vendor vendorApple = Vendor.builder().name("Apple").contact("011231231231").build();
-        Vendor vendorSaved = vendorService.create(vendorApple); // Guardamos el Vendor
+        Vendor vendorSaved = vendorService.create(vendorApple);
 
         // Crear los detalles de compra
         PurchaseDetail detail = PurchaseDetail.builder()
@@ -75,10 +73,10 @@ public class BootStrapData implements CommandLineRunner {
 
         // Crear la compra y asignarle los detalles
         Purchase purchase = Purchase.builder()
-                .vendor(vendorSaved) // Usar el vendor ya guardado
+                .vendor(vendorSaved)
                 .date(LocalDate.of(2024, 12, 12))
                 .totalAmount(9999.95)
-                .purchaseDetails(List.of(detail))
+                .details(Set.of(detail))
                 .build();
 
         // Asignar la compra a cada detalle para mantener la relación bidireccional
@@ -88,15 +86,18 @@ public class BootStrapData implements CommandLineRunner {
         Purchase savedPurchase = purchaseService.create(purchase);
         System.out.println("Purchase guardada: " + savedPurchase);
 
+        vendorApple.addPurchase(savedPurchase);
+        vendorService.update(vendorApple);
+
         // Crear usuario
-        User user = User.builder()
-                .employee(empSaved)
-                .role(Role.EMPLOYEE)  // Suponiendo que tienes una enum Role con ADMIN, TI_ADMIN, etc.
-                .username("alejandro")
-                .password("password123")
-                .build();
-        User savedUser = userService.create(user);
-        System.out.println("Usuario guardado: " + savedUser);
+//        User user = User.builder()
+//                .id(1L)
+//                .role(Role.EMPLOYEE)
+//                .username("alejandro")
+//                .password("password123")
+//                .build();
+//        User savedUser = userService.create(user);
+//        System.out.println("Usuario guardado: " + savedUser);
 
     }
 

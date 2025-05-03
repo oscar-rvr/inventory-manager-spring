@@ -18,7 +18,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 }

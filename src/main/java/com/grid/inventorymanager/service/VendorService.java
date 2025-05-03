@@ -18,7 +18,7 @@ public class VendorService {
         return vendorRepository.save(vendor);
     }
 
-    public Optional<Vendor> findById(Integer id) {
+    public Optional<Vendor> findById(Long id) {
         return vendorRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class VendorService {
         return vendorRepository.save(vendor);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         vendorRepository.deleteById(id);
     }
 }

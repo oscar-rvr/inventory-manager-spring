@@ -4,21 +4,23 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "computers")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @PrimaryKeyJoinColumn(name = "asset_id")
 public class Computer extends Asset {
+
     private Integer ram;
+
     private Integer disk;
+
     private String core;
 
     @Column(name = "screen_state")

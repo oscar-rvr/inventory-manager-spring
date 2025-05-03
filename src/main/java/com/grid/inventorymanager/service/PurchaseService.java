@@ -17,7 +17,7 @@ public class PurchaseService {
         return purchaseRepository.save(purchase);
     }
 
-    public Optional<Purchase> findById(Integer id) {
+    public Optional<Purchase> findById(Long id) {
         return purchaseRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class PurchaseService {
         return purchaseRepository.save(purchase);
     }
 
-    public void deletedById(Integer id) {
+    public void deletedById(Long id) {
         purchaseRepository.deleteById(id);
     }
 
