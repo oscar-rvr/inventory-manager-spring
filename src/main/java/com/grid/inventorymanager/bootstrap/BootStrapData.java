@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -23,15 +24,13 @@ public class BootStrapData implements CommandLineRunner {
     private final PurchaseService purchaseService;
     private final VendorService vendorService;
     private final UserService userService;
-    private final EmployeeRepository employeeRepository;
 
     @Override
     public void run(String... args) {
-
-
         // Crear empleado
         Employee emp = Employee.builder().name("Alejandro").mail("Alejandro@dev.com").build();
-        Employee empSaved = employeeRepository.save(emp);
+
+        Employee empSaved = employeeService.create(emp);
         System.out.println("Empleado guardado " + empSaved);
 
         // Crear asset
@@ -89,16 +88,15 @@ public class BootStrapData implements CommandLineRunner {
         vendorApple.addPurchase(savedPurchase);
         vendorService.update(vendorApple);
 
-        // Crear usuario
-//        User user = User.builder()
-//                .id(1L)
-//                .role(Role.EMPLOYEE)
-//                .username("alejandro")
-//                .password("password123")
-//                .build();
-//        User savedUser = userService.create(user);
-//        System.out.println("Usuario guardado: " + savedUser);
+//         Crear usuario
+        User user = User.builder()
+                .role(Role.EMPLOYEE)
+                .username("alejandro")
+                .password("password123")
+                .build();
 
+        empSaved.addUser(user);
+        employeeService.update(empSaved);
     }
 
 }

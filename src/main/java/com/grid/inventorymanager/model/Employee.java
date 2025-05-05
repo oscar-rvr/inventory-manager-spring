@@ -37,6 +37,12 @@ public class Employee {
     @Builder.Default
     private Set<AssetMovements> assets = new HashSet<>();
 
+    @OneToOne(mappedBy = "employee",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    private User user;
+
     public void addAsset(Asset asset, MovementType movementType, LocalDate date) {
         AssetMovementsId id = new AssetMovementsId();
         id.setAssetId(asset.getId());
@@ -65,6 +71,16 @@ public class Employee {
                 break;
             }
         }
+    }
+
+    public void addUser(User user) {
+        this.user = user;
+        user.setEmployee(this);
+    }
+
+    public void removeUser() {
+        this.user.setEmployee(null);
+        this.user = null;
     }
 
     @Override
