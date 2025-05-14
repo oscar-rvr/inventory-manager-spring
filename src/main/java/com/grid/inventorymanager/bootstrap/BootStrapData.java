@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-@Profile("!test")
+@Profile("local")
 public class BootStrapData implements CommandLineRunner {
 
     private final EmployeeService employeeService;
@@ -47,7 +47,7 @@ public class BootStrapData implements CommandLineRunner {
         Computer computer = Computer.builder()
                 .name("MAC 2018")
                 .description("Interns usage")
-                .seriesNumber("MAC2018ABC1234")
+                .seriesNumber("MAC2018ABC123")
                 .ram(12)
                 .disk(128)
                 .core("i9 12va")

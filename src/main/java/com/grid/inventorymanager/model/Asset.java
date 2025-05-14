@@ -1,5 +1,7 @@
 package com.grid.inventorymanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@JsonIgnoreProperties({"id", "employees"})
 public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
