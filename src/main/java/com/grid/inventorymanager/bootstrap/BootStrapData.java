@@ -39,7 +39,7 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Asset Guardado " + assetSaved);
 
         // Crear asset movement
-        assetSaved.addEmployee(empSaved, LocalDate.now(), MovementType.ASSIGN);
+        assetSaved.addEmployee(empSaved);
         assetService.update(assetSaved);
         System.out.println("Asset Movement guardado " + assetSaved.getEmployees());
 

@@ -42,7 +42,8 @@ public class AssetMovements {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AssetMovements that)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        AssetMovements that = (AssetMovements) o;
         return Objects.equals(id, that.id);
     }
 

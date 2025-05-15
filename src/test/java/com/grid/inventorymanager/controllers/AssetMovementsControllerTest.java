@@ -39,7 +39,6 @@ class AssetMovementsControllerTest {
         Employee employee = employeeRepository.save(Employee.builder()
                 .name("Oscar Dev")
                 .mail("oscar@example.com")
-                .role(Role.EMPLOYEE)
                 .build());
 
         Asset asset = assetRepository.save(Asset.builder()

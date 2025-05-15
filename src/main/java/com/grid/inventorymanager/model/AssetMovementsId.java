@@ -26,9 +26,10 @@ public class AssetMovementsId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AssetMovementsId )) return false;
-        return (employeeId != null && employeeId.equals(((AssetMovementsId) o).getEmployeeId()))
-                && (assetId != null && assetId.equals(((AssetMovementsId) o).getAssetId()));
+        if (o == null || getClass() != o.getClass()) return false;
+        AssetMovementsId that = (AssetMovementsId) o;
+        return Objects.equals(employeeId, that.employeeId) &&
+                Objects.equals(assetId, that.assetId);
     }
 
     @Override

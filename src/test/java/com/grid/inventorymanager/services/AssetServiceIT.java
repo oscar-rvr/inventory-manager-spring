@@ -55,7 +55,7 @@ class AssetServiceIT {
     @Test
     void whenFindById_thenReturnsCorrectAsset() {
         Asset saved = assetService.create(asset);
-        Optional<Asset> found = assetService.findBy(saved.getId());
+        Optional<Asset> found = assetService.findById(saved.getId());
         assertThat(found).isPresent().contains(saved);
     }
 

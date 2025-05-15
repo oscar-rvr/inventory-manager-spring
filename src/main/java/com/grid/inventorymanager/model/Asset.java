@@ -40,17 +40,26 @@ public class Asset {
     @Builder.Default
     private Set<AssetMovements> employees = new HashSet<>();
 
-    public void addEmployee(Employee employee, LocalDate date, MovementType movementType) {
+    public void addEmployee(Employee employee) {
         AssetMovementsId id = new AssetMovementsId();
         id.setAssetId(this.id);
         id.setEmployeeId(employee.getId());
+
+        boolean alreadyExists = employees.stream().anyMatch(movement ->
+                movement.getId().equals(id)
+        );
+
+        if (alreadyExists) {
+            // Optionally update movementType or date here if needed
+            return;
+        }
 
         AssetMovements assetMovements = AssetMovements.builder()
                 .id(id)
                 .employee(employee)
                 .asset(this)
-                .assetMovementDate(date)
-                .movementType(movementType)
+                .assetMovementDate(LocalDate.now())
+                .movementType(MovementType.ASSIGN)
                 .build();
         employees.add(assetMovements);
         employee.getAssets().add(assetMovements);

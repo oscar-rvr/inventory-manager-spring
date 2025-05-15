@@ -53,9 +53,9 @@ class InventoryManagerSpringApplicationTests {
 				.build();
 
 		// Simular búsqueda
-		when(assetService.findBy(asset.getId())).thenReturn(Optional.of(asset));
+		when(assetService.findById(asset.getId())).thenReturn(Optional.of(asset));
 
-		Optional<Asset> fetchedAsset = assetService.findBy(asset.getId());
+		Optional<Asset> fetchedAsset = assetService.findById(asset.getId());
 		assertTrue(fetchedAsset.isPresent());
 		assertEquals("Monitor", fetchedAsset.get().getName());
 	}

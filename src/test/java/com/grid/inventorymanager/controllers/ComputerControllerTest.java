@@ -43,7 +43,6 @@ class ComputerControllerTest {
         Employee employee = employeeRepository.save(Employee.builder()
                 .name("Oscar Dev")
                 .mail("oscar@example.com")
-                .role(Role.EMPLOYEE)
                 .build());
 
         Computer computer = computerRepository.save(Computer.builder()

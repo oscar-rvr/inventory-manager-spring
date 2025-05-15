@@ -1,15 +1,9 @@
 package com.grid.inventorymanager.controller;
 
 import com.grid.inventorymanager.exceptions.AssetNotFoundException;
-import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.model.Asset;
 import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.Employee;
-import com.grid.inventorymanager.model.MovementType;
 import com.grid.inventorymanager.repository.AssetRepository;
-import com.grid.inventorymanager.repository.EmployeeRepository;
-import com.grid.inventorymanager.service.AssetService;
-import com.grid.inventorymanager.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,25 +20,19 @@ import java.util.Set;
 public class AssetController {
 
     private final AssetRepository assetRepository;
-    private final EmployeeRepository employeeRepository;
-    private final AssetService assetService;
 
     @GetMapping
-    public List<Asset> retrieveAll() {
+    public List<Asset> retrieveAllAssets() {
         return assetRepository.findAll();
     }
 
     @GetMapping(path = "/{id}")
-    public Asset retrieveOne(@PathVariable Long id) {
-        Asset user = assetRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new AssetNotFoundException("id: " + id);
-        }
-        return user;
+    public Asset retrieveOneAsset(@PathVariable Long id) {
+        return assetRepository.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
     }
 
     @PostMapping
-    public ResponseEntity<Asset> createUser(@RequestBody Asset asset) {
+    public ResponseEntity<Asset> createAsset(@RequestBody Asset asset) {
         Asset saved = assetRepository.save(asset);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(saved.getId()).toUri();
@@ -52,36 +40,14 @@ public class AssetController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void deleteAsset(@PathVariable Long id) {
+        // Validate that the asset is not related to a purchase
         assetRepository.deleteById(id);
     }
 
     @GetMapping(path = "/{id}/movements")
     public Set<AssetMovements> retrieveAll(@PathVariable Long id) {
-        Asset asset = assetRepository.findById(id).orElse(null);
-        if (asset == null) {
-            throw new AssetNotFoundException("id: " + id);
-        }
+        Asset asset = assetRepository.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
         return asset.getEmployees();
-    }
-
-    @PostMapping(path = "/{id}/movements/{employeeId}/{movementType}")
-    public ResponseEntity<AssetMovements> createMovement(@PathVariable Long id, @PathVariable Long employeeId, @PathVariable MovementType movementType) {
-        Asset asset = assetRepository.findById(id).orElse(null);
-        if (asset == null) {
-            throw new AssetNotFoundException("id: " + id);
-        }
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        if (employee == null) {
-            throw new EmployeeNotFoundException("id: " + id);
-        }
-
-        asset.addEmployee(employee, LocalDate.now(), movementType);
-
-        Asset saved = assetRepository.save(asset);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}/movements").buildAndExpand(saved.getId()).toUri();
-        return ResponseEntity.created(location).build();
     }
 }

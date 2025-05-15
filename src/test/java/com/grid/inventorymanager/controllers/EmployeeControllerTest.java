@@ -32,7 +32,6 @@ class EmployeeControllerTest {
         employeeRepository.save(Employee.builder()
                 .name("Oscar Dev")
                 .mail("oscar@example.com")
-                .role(Role.ADMIN)
                 .build());
     }
 

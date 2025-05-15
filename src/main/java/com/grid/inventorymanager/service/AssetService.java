@@ -17,7 +17,7 @@ public class AssetService {
         return assetRepository.save(asset);
     }
 
-    public Optional<Asset> findBy(Long id) {
+    public Optional<Asset> findById(Long id) {
         return assetRepository.findById(id);
     }
 

@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.DatabaseMetaData;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
@@ -19,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"id", "assets"})
+@JsonIgnoreProperties({"id", "assets", "user"})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +26,6 @@ public class Employee {
     private String name;
 
     private String mail;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     @OneToMany(mappedBy = "employee",
             cascade = CascadeType.ALL,
@@ -41,11 +36,10 @@ public class Employee {
 
     @OneToOne(mappedBy = "employee",
             cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
+            orphanRemoval = true)
     private User user;
 
-    public void addAsset(Asset asset, MovementType movementType, LocalDate date) {
+    public void addAsset(Asset asset) {
         AssetMovementsId id = new AssetMovementsId();
         id.setAssetId(asset.getId());
         id.setEmployeeId(this.id);
@@ -54,8 +48,8 @@ public class Employee {
                 .id(id)
                 .employee(this)
                 .asset(asset)
-                .assetMovementDate(date)
-                .movementType(movementType)
+                .assetMovementDate(LocalDate.now())
+                .movementType(MovementType.ASSIGN)
                 .build();
 
         this.assets.add(assetMovements);

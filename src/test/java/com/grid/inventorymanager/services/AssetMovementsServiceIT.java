@@ -48,7 +48,6 @@ class AssetMovementsServiceIT {
         employee = employeeRepository.save(Employee.builder()
                 .name("Oscar Dev")
                 .mail("oscar@example.com")
-                .role(Role.ADMIN)
                 .build());
 
         asset = assetRepository.save(Asset.builder()
@@ -69,13 +68,13 @@ class AssetMovementsServiceIT {
     void whenCreate_thenPersistMovement() {
         AssetMovements saved = assetMovementsService.create(movement);
         assertThat(saved.getId()).isNotNull();
-        assertThat(assetMovementsRepository.findById(saved.getId().getAssetId())).isPresent();
+        assertThat(assetMovementsRepository.findById(saved.getId())).isPresent();
     }
 
     @Test
     void whenFindById_thenReturnsMovement() {
         AssetMovements saved = assetMovementsService.create(movement);
-        Optional<AssetMovements> found = assetMovementsService.findById(saved.getId().getAssetId());
+        Optional<AssetMovements> found = assetMovementsService.findById(saved.getId());
         assertThat(found).isPresent().contains(saved);
     }
 
@@ -92,14 +91,14 @@ class AssetMovementsServiceIT {
         saved.setMovementType(MovementType.ASSIGN);
         assetMovementsService.update(saved);
 
-        AssetMovements updated = assetMovementsRepository.findById(saved.getId().getAssetId()).orElseThrow();
+        AssetMovements updated = assetMovementsRepository.findById(saved.getId()).orElseThrow();
         assertThat(updated.getMovementType()).isEqualTo(MovementType.ASSIGN);
     }
 
     @Test
     void whenDelete_thenItIsRemoved() {
         AssetMovements saved = assetMovementsService.create(movement);
-        assetMovementsService.deletedById(saved.getId().getAssetId());
-        assertThat(assetMovementsRepository.findById(saved.getId().getAssetId())).isEmpty();
+        assetMovementsService.deletedById(saved.getId());
+        assertThat(assetMovementsRepository.findById(saved.getId())).isEmpty();
     }
 }
