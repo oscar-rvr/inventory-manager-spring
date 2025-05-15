@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ public class PurchaseDetail {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 

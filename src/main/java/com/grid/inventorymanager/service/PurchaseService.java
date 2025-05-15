@@ -1,7 +1,13 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.exceptions.PurchaseNotFoundException;
+import com.grid.inventorymanager.exceptions.VendorNotFoundException;
 import com.grid.inventorymanager.model.Purchase;
+import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.PurchaseRepository;
+import com.grid.inventorymanager.repository.VendorRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +18,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
+    private final VendorRepository vendorRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public Purchase create(Purchase purchase) {
+        if (purchase.getVendor() == null || purchase.getVendor().getId() == null) {
+            throw new VendorNotFoundException("Vendor is required");
+        }
+
+        Vendor vendor = entityManager.getReference(Vendor.class, purchase.getVendor().getId());
+        purchase.setVendor(vendor);
+
         return purchaseRepository.save(purchase);
     }
 
@@ -25,12 +42,18 @@ public class PurchaseService {
         return purchaseRepository.findAll();
     }
 
-    public Purchase update(Purchase purchase) {
-        return purchaseRepository.save(purchase);
+    public Purchase update(Long id, Purchase purchase) {
+        Purchase existingPurchase = purchaseRepository.findById(id).orElseThrow(() -> new PurchaseNotFoundException("id: " + id));
+
+        Vendor vendor = entityManager.getReference(Vendor.class, purchase.getVendor().getId());
+        existingPurchase.setVendor(vendor);
+        existingPurchase.setDate(purchase.getDate());
+        existingPurchase.setTotalAmount(purchase.getTotalAmount());
+
+        return purchaseRepository.save(existingPurchase);
     }
 
     public void deletedById(Long id) {
         purchaseRepository.deleteById(id);
     }
-
 }

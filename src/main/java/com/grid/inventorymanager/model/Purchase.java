@@ -1,6 +1,8 @@
 package com.grid.inventorymanager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +27,7 @@ public class Purchase {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Vendor vendor;
 
     private LocalDate date;
@@ -35,6 +38,7 @@ public class Purchase {
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY)
+    @JsonManagedReference
     @Builder.Default
     private Set<PurchaseDetail> details = new HashSet<>();
 
@@ -69,7 +73,6 @@ public class Purchase {
     public String toString() {
         return "Purchase{" +
                 "id=" + (id != null ? id : null) +
-                ", vendor=" + (vendor != null ? vendor : null) +
                 ", date=" + (date != null ? date : null) +
                 ", totalAmount=" + (vendor != null ? vendor : null) +
                 '}';
