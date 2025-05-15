@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.exceptions.VendorNotFoundException;
 import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.VendorRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,13 @@ public class VendorService {
         return vendorRepository.findAll();
     }
 
-    public Vendor update(Vendor vendor) {
-        return vendorRepository.save(vendor);
+    public Vendor update(Long id, Vendor vendor) {
+        Vendor existingVendor = vendorRepository.findById(id).orElseThrow(() -> new VendorNotFoundException("id: " + id));
+
+        existingVendor.setName(vendor.getName());
+        existingVendor.setContact(vendor.getContact());
+
+        return vendorRepository.save(existingVendor);
     }
 
     public void deleteById(Long id) {

@@ -86,7 +86,7 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Purchase guardada: " + savedPurchase);
 
         vendorApple.addPurchase(savedPurchase);
-        vendorService.update(vendorApple);
+        //vendorService.update(vendorApple);
 
 //         Crear usuario
         User user = User.builder()

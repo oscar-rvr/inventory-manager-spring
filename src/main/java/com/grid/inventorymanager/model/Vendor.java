@@ -1,6 +1,7 @@
 package com.grid.inventorymanager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class Vendor {
     @OneToMany(mappedBy = "vendor",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonManagedReference
     @Builder.Default
     private Set<Purchase> purchases = new HashSet<>();
 
