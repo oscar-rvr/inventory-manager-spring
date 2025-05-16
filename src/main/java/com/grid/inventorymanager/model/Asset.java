@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@JsonIgnoreProperties({"id", "employees"})
+@JsonIgnoreProperties({"employees"})
 public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
