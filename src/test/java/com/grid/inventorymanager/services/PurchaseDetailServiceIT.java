@@ -103,7 +103,7 @@ class PurchaseDetailServiceIT {
     void whenUpdate_thenChangesArePersisted() {
         PurchaseDetail saved = purchaseDetailService.create(purchaseDetail);
         saved.setAmount(3);
-        purchaseDetailService.update(saved);
+        purchaseDetailService.update(saved.getId(), saved);
 
         PurchaseDetail updated = purchaseDetailRepository.findById(saved.getId()).orElseThrow();
         assertThat(updated.getAmount()).isEqualTo(3);

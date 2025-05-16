@@ -63,7 +63,7 @@ class VendorServiceIT {
     void whenUpdate_thenChangesArePersisted() {
         Vendor saved = vendorService.create(vendor);
         saved.setContact("newemail@tech.com");
-        vendorService.update(saved);
+        vendorService.update(saved.getId(), saved);
 
         Vendor updated = vendorRepository.findById(saved.getId()).orElseThrow();
         assertThat(updated.getContact()).isEqualTo("newemail@tech.com");

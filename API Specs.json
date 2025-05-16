@@ -1,0 +1,1345 @@
+{
+	"openapi": "3.1.0",
+	"info": {
+		"title": "OpenAPI definition",
+		"version": "v0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8079",
+			"description": "Generated server url"
+		}
+	],
+	"paths": {
+		"/v1/vendors/{id}": {
+			"get": {
+				"tags": [
+					"vendor-controller"
+				],
+				"operationId": "retrieveOne",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Vendor"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"vendor-controller"
+				],
+				"operationId": "updateVendor",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Vendor"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Vendor"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"vendor-controller"
+				],
+				"operationId": "deleteOne",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/purchases/{id}": {
+			"get": {
+				"tags": [
+					"purchase-controller"
+				],
+				"operationId": "findById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Purchase"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"purchase-controller"
+				],
+				"operationId": "update",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Purchase"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Purchase"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"purchase-controller"
+				],
+				"operationId": "delete",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/purchase-details/{id}": {
+			"get": {
+				"tags": [
+					"purchase-detail-controller"
+				],
+				"operationId": "findById_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/PurchaseDetail"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"purchase-detail-controller"
+				],
+				"operationId": "update_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PurchaseDetail"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/PurchaseDetail"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"purchase-detail-controller"
+				],
+				"operationId": "delete_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/vendors": {
+			"get": {
+				"tags": [
+					"vendor-controller"
+				],
+				"operationId": "retrieveAll",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Vendor"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"vendor-controller"
+				],
+				"operationId": "createVendor",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Vendor"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Vendor"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/users/{employeeId}": {
+			"post": {
+				"tags": [
+					"user-controller"
+				],
+				"operationId": "createUser",
+				"parameters": [
+					{
+						"name": "employeeId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/purchases": {
+			"get": {
+				"tags": [
+					"purchase-controller"
+				],
+				"operationId": "findAll",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Purchase"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"purchase-controller"
+				],
+				"operationId": "create",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Purchase"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Purchase"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/purchase-details": {
+			"get": {
+				"tags": [
+					"purchase-detail-controller"
+				],
+				"operationId": "findAll_1",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/PurchaseDetail"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"purchase-detail-controller"
+				],
+				"operationId": "create_1",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PurchaseDetail"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/PurchaseDetail"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/movements/{assetId}/{employeeId}": {
+			"get": {
+				"tags": [
+					"asset-movements-controller"
+				],
+				"operationId": "showSpecificAssetMovements",
+				"parameters": [
+					{
+						"name": "assetId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "employeeId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"asset-movements-controller"
+				],
+				"operationId": "createMovement",
+				"parameters": [
+					{
+						"name": "assetId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "employeeId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/AssetMovements"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/employees": {
+			"get": {
+				"tags": [
+					"employee-controller"
+				],
+				"operationId": "retrieveAllEmployees",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Employee"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"employee-controller"
+				],
+				"operationId": "createEmployee",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Employee"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Employee"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/computers": {
+			"get": {
+				"tags": [
+					"computer-controller"
+				],
+				"operationId": "retrieveAllComputers",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Computer"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"computer-controller"
+				],
+				"operationId": "createComputer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Computer"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Computer"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/assets": {
+			"get": {
+				"tags": [
+					"asset-controller"
+				],
+				"operationId": "retrieveAllAssets",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Asset"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"asset-controller"
+				],
+				"operationId": "createAsset",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Asset"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Asset"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/users": {
+			"get": {
+				"tags": [
+					"user-controller"
+				],
+				"operationId": "retrieveAllUsers",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/User"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/users/{id}": {
+			"get": {
+				"tags": [
+					"user-controller"
+				],
+				"operationId": "retrieveOneUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"user-controller"
+				],
+				"operationId": "deleteUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/movements": {
+			"get": {
+				"tags": [
+					"asset-movements-controller"
+				],
+				"operationId": "showAssetMovements",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/movements/emp/{employeeId}": {
+			"get": {
+				"tags": [
+					"asset-movements-controller"
+				],
+				"operationId": "showAssetMovementsByEmployee",
+				"parameters": [
+					{
+						"name": "employeeId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/movements/asset/{assetId}": {
+			"get": {
+				"tags": [
+					"asset-movements-controller"
+				],
+				"operationId": "showAssetMovementsByAsset",
+				"parameters": [
+					{
+						"name": "assetId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/employees/{id}": {
+			"get": {
+				"tags": [
+					"employee-controller"
+				],
+				"operationId": "retrieveOneEmployee",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Employee"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"employee-controller"
+				],
+				"operationId": "deleteEmployee",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/employees/{id}/movements": {
+			"get": {
+				"tags": [
+					"employee-controller"
+				],
+				"operationId": "retrieveAll_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									},
+									"uniqueItems": true
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/computers/{id}": {
+			"get": {
+				"tags": [
+					"computer-controller"
+				],
+				"operationId": "retrieveOneComputer",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Computer"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"computer-controller"
+				],
+				"operationId": "deleteComputer",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/computers/{id}/movements": {
+			"get": {
+				"tags": [
+					"computer-controller"
+				],
+				"operationId": "retrieveAll_2",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									},
+									"uniqueItems": true
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/assets/{id}": {
+			"get": {
+				"tags": [
+					"asset-controller"
+				],
+				"operationId": "retrieveOneAsset",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Asset"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"asset-controller"
+				],
+				"operationId": "deleteAsset",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/v1/assets/{id}/movements": {
+			"get": {
+				"tags": [
+					"asset-controller"
+				],
+				"operationId": "retrieveAll_3",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/AssetMovements"
+									},
+									"uniqueItems": true
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Asset": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"seriesNumber": {
+						"type": "string"
+					}
+				}
+			},
+			"Purchase": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"vendor": {
+						"$ref": "#/components/schemas/Vendor"
+					},
+					"date": {
+						"type": "string",
+						"format": "date"
+					},
+					"totalAmount": {
+						"type": "number",
+						"format": "double"
+					},
+					"details": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PurchaseDetail"
+						},
+						"uniqueItems": true
+					}
+				}
+			},
+			"PurchaseDetail": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"purchase": {
+						"$ref": "#/components/schemas/Purchase"
+					},
+					"asset": {
+						"$ref": "#/components/schemas/Asset"
+					},
+					"amount": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"pricePerItem": {
+						"type": "number",
+						"format": "double"
+					}
+				}
+			},
+			"Vendor": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"name": {
+						"type": "string"
+					},
+					"contact": {
+						"type": "string"
+					},
+					"purchases": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Purchase"
+						},
+						"uniqueItems": true
+					}
+				}
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"role": {
+						"type": "string",
+						"enum": [
+							"ADMIN",
+							"EMPLOYEE",
+							"MANAGER"
+						]
+					},
+					"username": {
+						"type": "string"
+					}
+				}
+			},
+			"AssetMovements": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/AssetMovementsId"
+					},
+					"movementType": {
+						"type": "string",
+						"enum": [
+							"ASSIGN",
+							"RETURNED",
+							"REPAIRED"
+						]
+					},
+					"assetMovementDate": {
+						"type": "string",
+						"format": "date"
+					}
+				}
+			},
+			"AssetMovementsId": {
+				"type": "object",
+				"properties": {
+					"employeeId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"assetId": {
+						"type": "integer",
+						"format": "int64"
+					}
+				}
+			},
+			"Employee": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"mail": {
+						"type": "string"
+					}
+				}
+			},
+			"Computer": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"seriesNumber": {
+						"type": "string"
+					},
+					"ram": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"disk": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"core": {
+						"type": "string"
+					},
+					"screenState": {
+						"type": "string"
+					},
+					"keyboardState": {
+						"type": "string"
+					},
+					"shellState": {
+						"type": "string"
+					},
+					"comments": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
