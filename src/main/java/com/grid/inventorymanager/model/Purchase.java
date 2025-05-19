@@ -1,9 +1,6 @@
 package com.grid.inventorymanager.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,14 +18,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties("details")
+@JsonIgnoreProperties({"vendor", "details"})
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     private Vendor vendor;
 
     private LocalDate date;
@@ -40,7 +35,6 @@ public class Purchase {
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY)
-    @JsonManagedReference
     @Builder.Default
     private Set<PurchaseDetail> details = new HashSet<>();
 
@@ -52,7 +46,7 @@ public class Purchase {
                 .pricePerItem(pricePerItem)
                 .build();
         details.add(detail);
-    } /// ver si lo agrego con el PurchaseDetail
+    }
 
     public void removeDetail(PurchaseDetail detail) {
         details.remove(detail);
@@ -76,8 +70,8 @@ public class Purchase {
         return "Purchase{" +
                 "id=" + (id != null ? id : null) +
                 ", date=" + (date != null ? date : null) +
-                ", totalAmount=" + (vendor != null ? vendor : null) +
+                ", totalAmount=" + (totalAmount != null ? totalAmount : null) +
+                ", vendorId=" + (vendor != null ? vendor.getId() : null) +
                 '}';
     }
-
 }

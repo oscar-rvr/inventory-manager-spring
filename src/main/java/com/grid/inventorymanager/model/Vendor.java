@@ -1,12 +1,10 @@
 package com.grid.inventorymanager.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"purchases"})
 public class Vendor {
 
     @Id
@@ -29,7 +28,6 @@ public class Vendor {
     @OneToMany(mappedBy = "vendor",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JsonManagedReference
     @Builder.Default
     private Set<Purchase> purchases = new HashSet<>();
 
