@@ -4,6 +4,7 @@ import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.repository.EmployeeRepository;
+import com.grid.inventorymanager.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,22 +19,22 @@ import java.util.Set;
 @RequestMapping("/v1/employees")
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
     @GetMapping
     public List<Employee> retrieveAllEmployees() {
-        return employeeRepository.findAll();
+        return employeeService.findAll();
     }
 
     @GetMapping(path = "/{id}")
     public Employee retrieveOneEmployee(@PathVariable Long id) {
-        return employeeRepository.findById(id)
+        return employeeService.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("id: " + id));
     }
 
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        Employee saved = employeeRepository.save(employee);
+        Employee saved = employeeService.create(employee);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(location).build();
@@ -41,12 +42,12 @@ public class EmployeeController {
 
     @DeleteMapping(path = "/{id}")
     public void deleteEmployee(@PathVariable Long id) {
-        employeeRepository.deleteById(id);
+        employeeService.deletedById(id);
     }
 
     @GetMapping(path = "/{id}/movements")
     public Set<AssetMovements> retrieveAll(@PathVariable Long id) {
-        return employeeRepository.findById(id)
+        return employeeService.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("id: " + id))
                 .getAssets();
     }

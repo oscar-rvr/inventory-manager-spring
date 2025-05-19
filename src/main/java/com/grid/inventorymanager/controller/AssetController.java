@@ -4,6 +4,7 @@ import com.grid.inventorymanager.exceptions.AssetNotFoundException;
 import com.grid.inventorymanager.model.Asset;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.repository.AssetRepository;
+import com.grid.inventorymanager.service.AssetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,21 +20,21 @@ import java.util.Set;
 @RequestMapping("/v1/assets")
 public class AssetController {
 
-    private final AssetRepository assetRepository;
+    private final AssetService assetService;
 
     @GetMapping
     public List<Asset> retrieveAllAssets() {
-        return assetRepository.findAll();
+        return assetService.findAll();
     }
 
     @GetMapping(path = "/{id}")
     public Asset retrieveOneAsset(@PathVariable Long id) {
-        return assetRepository.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
+        return assetService.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
     }
 
     @PostMapping
     public ResponseEntity<Asset> createAsset(@RequestBody Asset asset) {
-        Asset saved = assetRepository.save(asset);
+        Asset saved = assetService.create(asset);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(location).build();
@@ -42,12 +43,12 @@ public class AssetController {
     @DeleteMapping(path = "/{id}")
     public void deleteAsset(@PathVariable Long id) {
         // Validate that the asset is not related to a purchase
-        assetRepository.deleteById(id);
+        assetService.deletedById(id);
     }
 
     @GetMapping(path = "/{id}/movements")
     public Set<AssetMovements> retrieveAll(@PathVariable Long id) {
-        Asset asset = assetRepository.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
+        Asset asset = assetService.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
         return asset.getEmployees();
     }
 }

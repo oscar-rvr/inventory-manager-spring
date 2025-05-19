@@ -8,6 +8,7 @@ import com.grid.inventorymanager.model.User;
 import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.repository.UserRepository;
 import com.grid.inventorymanager.service.EmployeeService;
+import com.grid.inventorymanager.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +22,17 @@ import java.util.Set;
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final EmployeeService employeeService;
 
     @GetMapping
     public List<User> retrieveAllUsers() {
-        return userRepository.findAll();
+        return userService.findAll();
     }
 
     @GetMapping(path = "/{id}")
     public User retrieveOneUser(@PathVariable Long id) {
-        return userRepository.findById(id)
+        return userService.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("id: " + id));
     }
 
@@ -46,7 +47,7 @@ public class UserController {
 
     @DeleteMapping(path = "/{id}")
     public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userService.deleteById(id);
     }
 
 
