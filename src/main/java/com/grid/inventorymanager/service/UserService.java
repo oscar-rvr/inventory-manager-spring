@@ -1,6 +1,9 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.exceptions.UserNotFoundException;
+import com.grid.inventorymanager.exceptions.VendorNotFoundException;
 import com.grid.inventorymanager.model.User;
+import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,24 @@ public class UserService {
 
     public User update(User user) {
         return userRepository.save(user);
+    }
+
+    public User update(Long id, User user) {
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("id: " + id));
+
+        if(user.getPassword() != null){
+            existingUser.setPassword(user.getPassword());
+        }
+
+        if(user.getRole() != null){
+            existingUser.setRole(user.getRole());
+        }
+
+        if(user.getUsername() != null){
+            existingUser.setUsername(user.getUsername());
+        }
+
+        return userRepository.save(existingUser);
     }
 
     public void deleteById(Long id) {

@@ -1,58 +1,78 @@
 package com.grid.inventorymanager.controllers;
-
-import com.grid.inventorymanager.model.Employee;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grid.inventorymanager.dto.UserDTO;
 import com.grid.inventorymanager.model.Role;
-import com.grid.inventorymanager.model.User;
-import com.grid.inventorymanager.repository.EmployeeRepository;
-import com.grid.inventorymanager.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-class UserControllerTest {
+public class UserControllerTest {
 
+    /*Estos son los test cases negativo para comprobar que falla cunado debe fallar y ademas que se cumple el estandar solicitado, aqui se testea */
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
+    private ObjectMapper objectMapper;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    @Test
+    void whenInvalidUsername_thenReturnsValidationError() throws Exception {
+        // given
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("123");
+        userDTO.setPassword("password123");
+        userDTO.setRole(Role.EMPLOYEE);
 
-    @BeforeEach
-    void setup() {
-        userRepository.deleteAll();
-        employeeRepository.deleteAll();
-
-        Employee employee = employeeRepository.save(Employee.builder()
-                .name("Oscar Dev")
-                .mail("oscar@example.com")
-                .build());
-
-        userRepository.save(User.builder()
-                .username("oscardev")
-                .password("1234")
-                .role(Role.ADMIN)
-                .employee(employee) // relación requerida
-                .build());
+        // when/then
+        mockMvc.perform(post("/v1/users/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors.username").value("Username must start with a letter and contain only letters and numbers"));
     }
 
     @Test
-    void whenGetUsers_thenReturnsViewWithModel() throws Exception {
-        mockMvc.perform(get("/users"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("users"))
-                .andExpect(model().attributeExists("users"));
+    void whenInvalidPassword_thenReturnsValidationError() throws Exception {
+        // given
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("validName");
+        userDTO.setPassword("pass12");
+        userDTO.setRole(Role.EMPLOYEE);
+
+        // when/then
+        mockMvc.perform(post("/v1/users/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors.password").value("Password must be at least 8 characters"));
+    }
+
+    @Test
+    void whenInvalidPasswordAndUsername_thenReturnsValidationError() throws Exception {
+        // given
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("12");
+        userDTO.setPassword("pass12");
+        userDTO.setRole(Role.EMPLOYEE);
+
+        // when/then
+        mockMvc.perform(post("/v1/users/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors.username").value("Username must start with a letter and contain only letters and numbers"))
+                .andExpect(jsonPath("$.errors.password").value("Password must be at least 8 characters"));
     }
 }
+

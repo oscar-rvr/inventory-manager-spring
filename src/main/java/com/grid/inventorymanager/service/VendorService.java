@@ -30,8 +30,14 @@ public class VendorService {
     public Vendor update(Long id, Vendor vendor) {
         Vendor existingVendor = vendorRepository.findById(id).orElseThrow(() -> new VendorNotFoundException("id: " + id));
 
-        existingVendor.setName(vendor.getName());
-        existingVendor.setContact(vendor.getContact());
+        if(vendor.getName() != null){
+            existingVendor.setName(vendor.getName());
+        }
+
+        if(vendor.getContact() != null){
+            existingVendor.setContact(vendor.getContact());
+        }
+
 
         return vendorRepository.save(existingVendor);
     }

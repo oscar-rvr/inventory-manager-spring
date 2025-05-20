@@ -6,6 +6,7 @@ import com.grid.inventorymanager.exceptions.UserNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.model.User;
+import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.repository.UserRepository;
 import com.grid.inventorymanager.service.EmployeeService;
@@ -54,6 +55,13 @@ public class UserController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
         return ResponseEntity.created(location).build();
+    }
+
+
+    @PutMapping("/{employeeId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
+        User updatedUser = userService.update(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping(path = "/{id}")

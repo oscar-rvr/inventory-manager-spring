@@ -38,19 +38,29 @@ public class PurchaseDetailService {
         PurchaseDetail existingPurchaseDetail = purchaseDetailRepository.findById(id)
                 .orElseThrow(() -> new PurchaseNotFoundException("id: " + id));
 
-        Purchase purchase = purchaseRepository.findById(purchaseDetail.getPurchase().getId())
-                .orElseThrow(() -> new PurchaseNotFoundException("purchase id: " + purchaseDetail.getPurchase().getId()));
+        if (purchaseDetail.getPurchase() != null && purchaseDetail.getPurchase().getId() != null) {
+            Purchase purchase = purchaseRepository.findById(purchaseDetail.getPurchase().getId())
+                    .orElseThrow(() -> new PurchaseNotFoundException("purchase id: " + purchaseDetail.getPurchase().getId()));
+            existingPurchaseDetail.setPurchase(purchase);
+        }
 
-        Asset asset = assetRepository.findById(purchaseDetail.getAsset().getId())
-                .orElseThrow(() -> new AssetNotFoundException("asset id: " + purchaseDetail.getAsset().getId()));
+        if (purchaseDetail.getAsset() != null && purchaseDetail.getAsset().getId() != null) {
+            Asset asset = assetRepository.findById(purchaseDetail.getAsset().getId())
+                    .orElseThrow(() -> new AssetNotFoundException("asset id: " + purchaseDetail.getAsset().getId()));
+            existingPurchaseDetail.setAsset(asset);
+        }
 
-        existingPurchaseDetail.setPurchase(purchase);
-        existingPurchaseDetail.setAsset(asset);
-        existingPurchaseDetail.setAmount(purchaseDetail.getAmount());
-        existingPurchaseDetail.setPricePerItem(purchaseDetail.getPricePerItem());
+        if (purchaseDetail.getAmount() != null) {
+            existingPurchaseDetail.setAmount(purchaseDetail.getAmount());
+        }
+
+        if (purchaseDetail.getPricePerItem() != null) {
+            existingPurchaseDetail.setPricePerItem(purchaseDetail.getPricePerItem());
+        }
 
         return purchaseDetailRepository.save(existingPurchaseDetail);
     }
+
 
 
     public void deleteById(Long id) {

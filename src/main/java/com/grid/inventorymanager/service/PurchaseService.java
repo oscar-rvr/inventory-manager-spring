@@ -43,12 +43,21 @@ public class PurchaseService {
     }
 
     public Purchase update(Long id, Purchase purchase) {
-        Purchase existingPurchase = purchaseRepository.findById(id).orElseThrow(() -> new PurchaseNotFoundException("id: " + id));
+        Purchase existingPurchase = purchaseRepository.findById(id)
+                .orElseThrow(() -> new PurchaseNotFoundException("id: " + id));
 
-        Vendor vendor = entityManager.getReference(Vendor.class, purchase.getVendor().getId());
-        existingPurchase.setVendor(vendor);
-        existingPurchase.setDate(purchase.getDate());
-        existingPurchase.setTotalAmount(purchase.getTotalAmount());
+        if (purchase.getVendor() != null && purchase.getVendor().getId() != null) {
+            Vendor vendor = entityManager.getReference(Vendor.class, purchase.getVendor().getId());
+            existingPurchase.setVendor(vendor);
+        }
+
+        if (purchase.getDate() != null) {
+            existingPurchase.setDate(purchase.getDate());
+        }
+
+        if (purchase.getTotalAmount() != null) {
+            existingPurchase.setTotalAmount(purchase.getTotalAmount());
+        }
 
         return purchaseRepository.save(existingPurchase);
     }
