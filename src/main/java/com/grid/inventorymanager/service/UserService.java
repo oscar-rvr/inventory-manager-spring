@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.dto.UserDTO;
 import com.grid.inventorymanager.exceptions.UserNotFoundException;
 import com.grid.inventorymanager.exceptions.VendorNotFoundException;
 import com.grid.inventorymanager.model.User;
@@ -33,19 +34,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User update(Long id, User user) {
+    public User update(Long id, UserDTO userDTO) {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("id: " + id));
 
-        if(user.getPassword() != null){
-            existingUser.setPassword(user.getPassword());
+        if(userDTO.getPassword() != null){
+            existingUser.setPassword(userDTO.getPassword());
         }
 
-        if(user.getRole() != null){
-            existingUser.setRole(user.getRole());
+        if(userDTO.getRole() != null){
+            existingUser.setRole(userDTO.getRole());
         }
 
-        if(user.getUsername() != null){
-            existingUser.setUsername(user.getUsername());
+        if(userDTO.getUsername() != null){
+            existingUser.setUsername(userDTO.getUsername());
         }
 
         return userRepository.save(existingUser);

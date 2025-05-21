@@ -1,10 +1,14 @@
 package com.grid.inventorymanager.controller;
 
+import com.grid.inventorymanager.dto.EmployeeDTO;
+import com.grid.inventorymanager.dto.EmployeePatchDTO;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Employee;
+import com.grid.inventorymanager.model.User;
 import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +37,16 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+
+        //conversion de DTO a employee
+        Employee employee = Employee.builder()
+                .name(employeeDTO.getName())
+                .mail(employeeDTO.getMail())
+                .build();
+
         Employee saved = employeeService.create(employee);
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(location).build();
@@ -51,4 +63,12 @@ public class EmployeeController {
                 .orElseThrow(() -> new EmployeeNotFoundException("id: " + id))
                 .getAssets();
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeePatchDTO employeePatchDTO) {
+       employeeService.update(id, employeePatchDTO);
+       return ResponseEntity.ok().build();
+    }
+
+
 }
