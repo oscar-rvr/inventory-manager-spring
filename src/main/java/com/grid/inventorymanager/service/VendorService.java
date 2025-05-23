@@ -38,7 +38,6 @@ public class VendorService {
             existingVendor.setContact(vendor.getContact());
         }
 
-
         return vendorRepository.save(existingVendor);
     }
 

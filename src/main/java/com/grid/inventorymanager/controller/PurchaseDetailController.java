@@ -1,8 +1,10 @@
 package com.grid.inventorymanager.controller;
 
+import com.grid.inventorymanager.dto.PurchaseDetailDTO;
 import com.grid.inventorymanager.exceptions.PurchaseDetailNotFoundException;
 import com.grid.inventorymanager.model.PurchaseDetail;
 import com.grid.inventorymanager.service.PurchaseDetailService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,7 @@ public class PurchaseDetailController {
     }
 
     @PostMapping
-    public ResponseEntity<PurchaseDetail> create(@RequestBody PurchaseDetail detail) {
+    public ResponseEntity<PurchaseDetail> create(@Valid @RequestBody PurchaseDetailDTO detail) {
         PurchaseDetail savedDetail = purchaseDetailService.create(detail);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -48,7 +50,7 @@ public class PurchaseDetailController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PurchaseDetail> update(@PathVariable Long id, @RequestBody PurchaseDetail detail) {
+    public ResponseEntity<PurchaseDetail> update(@PathVariable Long id,@Valid @RequestBody PurchaseDetailDTO detail) {
         PurchaseDetail updatedDetail = purchaseDetailService.update(id, detail);
         return ResponseEntity.ok(updatedDetail);
     }

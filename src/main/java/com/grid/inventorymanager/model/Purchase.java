@@ -46,7 +46,7 @@ public class Purchase {
                 .pricePerItem(pricePerItem)
                 .build();
         details.add(detail);
-    }
+    }//O: que hace esto?
 
     public void removeDetail(PurchaseDetail detail) {
         details.remove(detail);

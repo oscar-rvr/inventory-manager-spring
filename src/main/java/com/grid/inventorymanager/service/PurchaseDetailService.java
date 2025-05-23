@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.dto.PurchaseDetailDTO;
 import com.grid.inventorymanager.exceptions.AssetNotFoundException;
 import com.grid.inventorymanager.exceptions.PurchaseNotFoundException;
 import com.grid.inventorymanager.model.Asset;
@@ -22,8 +23,21 @@ public class PurchaseDetailService {
     private final PurchaseRepository purchaseRepository;
     private final AssetRepository assetRepository;
 
-    public PurchaseDetail create(PurchaseDetail purchaseDetail) {
-        return purchaseDetailRepository.save(purchaseDetail);
+    public PurchaseDetail create(PurchaseDetailDTO dto) {
+        Purchase purchase = purchaseRepository.findById(dto.getPurchaseId())
+                .orElseThrow(() -> new PurchaseNotFoundException("Purchase ID: " + dto.getPurchaseId()));
+
+        Asset asset = assetRepository.findById(dto.getAssetId())
+                .orElseThrow(() -> new AssetNotFoundException("Asset ID: " + dto.getAssetId()));
+
+        PurchaseDetail detail = PurchaseDetail.builder()
+                .purchase(purchase)
+                .asset(asset)
+                .amount(dto.getAmount())
+                .pricePerItem(dto.getPricePerItem())
+                .build();
+
+        return purchaseDetailRepository.save(detail);
     }
 
     public Optional<PurchaseDetail> findById(Long id) {
@@ -34,33 +48,32 @@ public class PurchaseDetailService {
         return purchaseDetailRepository.findAll();
     }
 
-    public PurchaseDetail update(Long id, PurchaseDetail purchaseDetail) {
-        PurchaseDetail existingPurchaseDetail = purchaseDetailRepository.findById(id)
+    public PurchaseDetail update(Long id, PurchaseDetailDTO dto) {
+        PurchaseDetail existing = purchaseDetailRepository.findById(id)
                 .orElseThrow(() -> new PurchaseNotFoundException("id: " + id));
 
-        if (purchaseDetail.getPurchase() != null && purchaseDetail.getPurchase().getId() != null) {
-            Purchase purchase = purchaseRepository.findById(purchaseDetail.getPurchase().getId())
-                    .orElseThrow(() -> new PurchaseNotFoundException("purchase id: " + purchaseDetail.getPurchase().getId()));
-            existingPurchaseDetail.setPurchase(purchase);
+        if (dto.getPurchaseId() != null) {
+            Purchase purchase = purchaseRepository.findById(dto.getPurchaseId())
+                    .orElseThrow(() -> new PurchaseNotFoundException("Purchase ID: " + dto.getPurchaseId()));
+            existing.setPurchase(purchase);
         }
 
-        if (purchaseDetail.getAsset() != null && purchaseDetail.getAsset().getId() != null) {
-            Asset asset = assetRepository.findById(purchaseDetail.getAsset().getId())
-                    .orElseThrow(() -> new AssetNotFoundException("asset id: " + purchaseDetail.getAsset().getId()));
-            existingPurchaseDetail.setAsset(asset);
+        if (dto.getAssetId() != null) {
+            Asset asset = assetRepository.findById(dto.getAssetId())
+                    .orElseThrow(() -> new AssetNotFoundException("Asset ID: " + dto.getAssetId()));
+            existing.setAsset(asset);
         }
 
-        if (purchaseDetail.getAmount() != null) {
-            existingPurchaseDetail.setAmount(purchaseDetail.getAmount());
+        if (dto.getAmount() != null) {
+            existing.setAmount(dto.getAmount());
         }
 
-        if (purchaseDetail.getPricePerItem() != null) {
-            existingPurchaseDetail.setPricePerItem(purchaseDetail.getPricePerItem());
+        if (dto.getPricePerItem() != null) {
+            existing.setPricePerItem(dto.getPricePerItem());
         }
 
-        return purchaseDetailRepository.save(existingPurchaseDetail);
+        return purchaseDetailRepository.save(existing);
     }
-
 
 
     public void deleteById(Long id) {

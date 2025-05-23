@@ -1,9 +1,11 @@
 package com.grid.inventorymanager.controller;
 
+import com.grid.inventorymanager.dto.ComputerDTO;
 import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Computer;
 import com.grid.inventorymanager.service.ComputerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +29,24 @@ public class ComputerController {
 
     @GetMapping(path = "/{id}")
     public Computer retrieveOneComputer(@PathVariable Long id) {
-        Computer computer = computerService.findById(id).orElseThrow(() -> new ComputerNotFoundException("id: " + id));
-        return computer;
+        return computerService.findById(id).orElseThrow(() -> new ComputerNotFoundException("id: " + id));
     }
 
     @PostMapping
-    public ResponseEntity<Computer> createComputer(@RequestBody Computer computer) {
+    public ResponseEntity<Computer> createComputer(@Valid @RequestBody ComputerDTO dto) {
+        Computer computer = Computer.builder()
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .seriesNumber(dto.getSeriesNumber())
+                .ram(dto.getRam())
+                .disk(dto.getDisk())
+                .core(dto.getCore())
+                .screenState(dto.getScreenState())
+                .keyboardState(dto.getKeyboardState())
+                .shellState(dto.getShellState())
+                .comments(dto.getComments())
+                .build();
+
         Computer saved = computerService.create(computer);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(saved.getId()).toUri();

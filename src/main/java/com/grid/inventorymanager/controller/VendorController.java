@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.controller;
 
+import com.grid.inventorymanager.dto.VendorDTO;
 import com.grid.inventorymanager.exceptions.VendorNotFoundException;
 import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.service.VendorService;
@@ -20,7 +21,12 @@ public class VendorController {
     private final VendorService vendorService;
 
     @PostMapping
-    public ResponseEntity<Vendor> createVendor(@Valid @RequestBody Vendor vendor) {
+    public ResponseEntity<Vendor> createVendor(@Valid @RequestBody VendorDTO vendorDTO) {
+        Vendor vendor = Vendor.builder()
+                .name(vendorDTO.getName())
+                .contact(vendorDTO.getContact())
+                .build();
+
         Vendor savedVendor = vendorService.create(vendor);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -46,7 +52,12 @@ public class VendorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Vendor> updateVendor(@PathVariable Long id, @Valid @RequestBody Vendor vendor) {
+    public ResponseEntity<Vendor> updateVendor(@PathVariable Long id, @Valid @RequestBody VendorDTO vendorDTO) {
+        Vendor vendor = Vendor.builder()
+                .name(vendorDTO.getName())
+                .contact(vendorDTO.getContact())
+                .build();
+
         Vendor updatedVendor = vendorService.update(id, vendor);
         return ResponseEntity.ok(updatedVendor);
     }

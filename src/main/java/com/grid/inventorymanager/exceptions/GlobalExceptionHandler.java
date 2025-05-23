@@ -2,6 +2,7 @@ package com.grid.inventorymanager.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,6 +47,16 @@ public class GlobalExceptionHandler {
         problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/not-found"));
         problemDetail.setDetail(ex.getMessage());
         return problemDetail;
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ProblemDetail handleJsonParse(HttpMessageNotReadableException ex) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setType(URI.create("https://api.gridRFC-7807.com/errors/malformed-json"));
+        pd.setTitle("Malformed JSON request");
+        String detail = ex.getMostSpecificCause().getMessage();
+        pd.setDetail(detail);
+        return pd;
     }
 
 }
