@@ -47,7 +47,7 @@ public class BootStrapData implements CommandLineRunner {
         Computer computer = Computer.builder()
                 .name("MAC 2018")
                 .description("Interns usage")
-                .seriesNumber("MAC2018ABC123")
+                .seriesNumber("MACC2018")
                 .ram(12)
                 .disk(128)
                 .core("i9 12va")

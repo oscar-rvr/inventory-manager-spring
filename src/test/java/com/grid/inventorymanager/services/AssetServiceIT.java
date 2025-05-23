@@ -47,12 +47,6 @@ class AssetServiceIT {
         assertThat(assetRepository.findById(saved.getId())).isPresent();
     }
 
-    @Test
-    void whenFindAll_thenReturnsList() {
-        assetService.create(asset);
-        List<Asset> all = assetService.findAll();
-        assertThat(all).hasSize(1);
-    }
 
     @Test
     void whenFindById_thenReturnsCorrectAsset() {

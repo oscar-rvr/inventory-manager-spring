@@ -1,44 +1,71 @@
 package com.grid.inventorymanager.controllers;
 
-import com.grid.inventorymanager.model.Vendor;
-import com.grid.inventorymanager.repository.VendorRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grid.inventorymanager.dto.VendorDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-class VendorControllerTest {
+public class VendorControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mockMvc;             // simula peticiones HTTP
 
     @Autowired
-    private VendorRepository vendorRepository;
+    private ObjectMapper objectMapper;   // convierte DTO a JSON
 
-    @BeforeEach
-    void setup() {
-        vendorRepository.deleteAll();
+    @Test
+    void whenNameIsBlank_thenReturnsValidationError() throws Exception {
+        VendorDTO dto = new VendorDTO();
+        dto.setName("");
+        dto.setContact("Contacto válido");
 
-        vendorRepository.save(Vendor.builder()
-                .name("Tech Supplier")
-                .contact("contact@techsupplier.com")
-                .build());
+        mockMvc.perform(post("/v1/vendors")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors.name")
+                        .value("Name is required"));
     }
 
     @Test
-    void whenGetVendors_thenReturnsViewWithModel() throws Exception {
-        mockMvc.perform(get("/vendors"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("vendors"))
-                .andExpect(model().attributeExists("vendors"));
+    void whenContactIsBlank_thenReturnsValidationError() throws Exception {
+        VendorDTO dto = new VendorDTO();
+        dto.setName("Nombre válido");
+        dto.setContact("");
+
+        mockMvc.perform(post("/v1/vendors")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors.contact")
+                        .value("Contact is required"));
+    }
+
+    @Test
+    void whenNameAndContactAreBlank_thenReturnsValidationErrors() throws Exception {
+        VendorDTO dto = new VendorDTO();
+        dto.setName("");
+        dto.setContact("");
+
+        mockMvc.perform(post("/v1/vendors")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors.name")
+                        .value("Name is required"))
+                .andExpect(jsonPath("$.errors.contact")
+                        .value("Contact is required"));
     }
 }

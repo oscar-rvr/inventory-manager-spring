@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.exceptions;
 
+import com.grid.inventorymanager.model.PurchaseDetail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -44,6 +45,42 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleUserNotFound(UserNotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problemDetail.setTitle("User not found");
+        problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/not-found"));
+        problemDetail.setDetail(ex.getMessage());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(ComputerNotFoundException.class)
+    public ProblemDetail handleUserNotFound(ComputerNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Computer not found");
+        problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/not-found"));
+        problemDetail.setDetail(ex.getMessage());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ProblemDetail handleUserNotFound(EmployeeNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Employee not found");
+        problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/not-found"));
+        problemDetail.setDetail(ex.getMessage());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(PurchaseDetailNotFoundException.class)
+    public ProblemDetail handleUserNotFound(PurchaseDetailNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Purchase detail not found");
+        problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/not-found"));
+        problemDetail.setDetail(ex.getMessage());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(PurchaseNotFoundException.class)
+    public ProblemDetail handleUserNotFound(PurchaseNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Purchase not found");
         problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/not-found"));
         problemDetail.setDetail(ex.getMessage());
         return problemDetail;

@@ -1,11 +1,13 @@
 package com.grid.inventorymanager.controller;
 
+import com.grid.inventorymanager.dto.AssetMovementsDTO;
 import com.grid.inventorymanager.exceptions.AssetNotFoundException;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.model.*;
 import com.grid.inventorymanager.service.AssetMovementsService;
 import com.grid.inventorymanager.service.AssetService;
 import com.grid.inventorymanager.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
@@ -64,23 +66,26 @@ public class AssetMovementsController {
         return assetMovementsService.findAll(Example.of(assetMovements));
     }
 
-    @PostMapping(path = "/{assetId}/{employeeId}")
-    public ResponseEntity<AssetMovements> createMovement(@PathVariable Long assetId, @PathVariable Long employeeId) {
-        Asset asset = assetService.findById(assetId).orElseThrow(() -> new AssetNotFoundException("id: " + assetId));
-        Employee employee = employeeService.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("id: " + employeeId));
+    @PostMapping
+    public ResponseEntity<AssetMovements> createMovement(@Valid @RequestBody AssetMovementsDTO dto) {
+        Asset asset = assetService.findById(dto.getAssetId())
+                .orElseThrow(() -> new AssetNotFoundException("id: " + dto.getAssetId()));
+        Employee employee = employeeService.findById(dto.getEmployeeId())
+                .orElseThrow(() -> new EmployeeNotFoundException("id: " + dto.getEmployeeId()));
 
         AssetMovements assetMovements = AssetMovements.builder()
-                .id(new AssetMovementsId(assetId, employeeId))
+                .id(new AssetMovementsId(dto.getAssetId(), dto.getEmployeeId()))
                 .asset(asset)
                 .employee(employee)
-                .assetMovementDate(LocalDate.now())
-                .movementType(MovementType.ASSIGN)
+                .movementType(dto.getMovementType())
+                .assetMovementDate(dto.getAssetMovementDate())
                 .build();
 
         AssetMovements saved = assetMovementsService.create(assetMovements);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("").build().toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(saved);
     }
+
 }
