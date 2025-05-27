@@ -1,6 +1,7 @@
 package com.grid.inventorymanager.controller;
 
 import com.grid.inventorymanager.dto.ComputerDTO;
+import com.grid.inventorymanager.dto.ComputerPatchDTO;
 import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Computer;
@@ -64,5 +65,11 @@ public class ComputerController {
         return computerService.findById(id)
                 .orElseThrow(() -> new ComputerNotFoundException("id: " + id))
                 .getEmployees();
+    }
+
+    @PatchMapping(path = "/{id}")
+    public ResponseEntity<Void> updateComputerPartially(@PathVariable Long id, @RequestBody @Valid ComputerPatchDTO dto) {
+        computerService.update(id, dto);
+        return ResponseEntity.noContent().build();
     }
 }

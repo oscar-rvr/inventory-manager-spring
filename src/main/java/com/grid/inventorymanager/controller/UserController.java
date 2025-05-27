@@ -1,5 +1,6 @@
 package com.grid.inventorymanager.controller;
 
+import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.dto.UserDTO;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.exceptions.UserNotFoundException;
@@ -13,6 +14,10 @@ import com.grid.inventorymanager.service.EmployeeService;
 import com.grid.inventorymanager.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,8 +34,39 @@ public class UserController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<User> retrieveAllUsers() {
-        return userService.findAll();
+    public ResponseEntity<PagedResponse<UserDTO>> retrieveAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<User> usersPage = userService.findAll(pageable);
+
+
+        List<UserDTO> content = usersPage.getContent().stream()
+                .map(user -> {
+                    UserDTO dto = new UserDTO();
+                    dto.setUsername(user.getUsername());
+                    dto.setPassword(user.getPassword());
+                    dto.setRole(user.getRole());
+                    return dto;
+                })
+                .toList();
+
+        PagedResponse<UserDTO> response = new PagedResponse<>(
+                content,
+                usersPage.getNumber(),
+                usersPage.getSize(),
+                usersPage.getTotalElements(),
+                usersPage.getTotalPages(),
+                usersPage.isLast()
+        );
+
+        return ResponseEntity.ok(response); // retorno corregido
     }
 
     @GetMapping(path = "/{id}")

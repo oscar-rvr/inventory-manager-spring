@@ -1,6 +1,9 @@
 package com.grid.inventorymanager.exceptions;
 
+import com.grid.inventorymanager.controller.ComputerController;
+import com.grid.inventorymanager.controller.VendorController;
 import com.grid.inventorymanager.model.PurchaseDetail;
+import com.grid.inventorymanager.model.Vendor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,8 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-
-@RestControllerAdvice
+//oders exceptions
+@RestControllerAdvice(assignableTypes = {ComputerController.class, VendorController.class})
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -95,5 +98,5 @@ public class GlobalExceptionHandler {
         pd.setDetail(detail);
         return pd;
     }
-
+//agregar una default
 }

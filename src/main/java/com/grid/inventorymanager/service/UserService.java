@@ -7,6 +7,8 @@ import com.grid.inventorymanager.model.User;
 import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +28,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public User update(User user) {
