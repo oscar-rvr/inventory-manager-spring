@@ -98,6 +98,31 @@ public class BootStrapData implements CommandLineRunner {
 
         empSaved.addUser(user);
         employeeService.update(empSaved);
+
+        for (int i = 0; i < 30; i++) {
+            String name = "user" + i;
+            String email = name + "@example.com";
+            String username = name;
+            String password = "Pass" + i + "!"; // puedes usar Faker si prefieres aleatorios
+            Role role = (i % 2 == 0) ? Role.ADMIN : Role.EMPLOYEE;
+
+            Employee emp1 = Employee.builder()
+                    .name(name)
+                    .mail(email)
+                    .build();
+
+            emp1 = employeeService.create(emp1); // guarda empleado
+
+            User user1 = User.builder()
+                    .username(username)
+                    .password(password)
+                    .role(role)
+                    .build();
+
+            emp1.addUser(user1);
+            employeeService.update(emp1); // guarda relación bidireccional
+        }
+
     }
 
 }

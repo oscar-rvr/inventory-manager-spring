@@ -12,24 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ComputerDTO {
-
-    // Campos heredados de Asset
-
-    @NotBlank(message = "Name is required")
-    @Size(max = 100, message = "Name must be at most 100 characters")
-    private String name;
-
-    @Size(max = 255, message = "Description must be at most 255 characters")
-    private String description;
-
-    @NotBlank(message = "Series number is required")
-    @ValidSN
-    @Size(max = 50, message = "Series number must be at most 8 characters")
-    private String seriesNumber;
-
-    // Campos propios de Computer
-
+public class ComputerDTO extends AssetDTO  {
     @NotNull(message = "RAM is required")
     @Min(value = 1, message = "RAM must be at least 1 GB")
     private Integer ram;

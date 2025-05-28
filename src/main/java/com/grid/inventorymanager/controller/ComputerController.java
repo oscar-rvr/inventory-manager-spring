@@ -2,12 +2,16 @@ package com.grid.inventorymanager.controller;
 
 import com.grid.inventorymanager.dto.ComputerDTO;
 import com.grid.inventorymanager.dto.ComputerPatchDTO;
+import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Computer;
+import com.grid.inventorymanager.model.Role;
 import com.grid.inventorymanager.service.ComputerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,8 +28,24 @@ public class ComputerController {
     private final ComputerService computerService;
 
     @GetMapping
-    public List<Computer> retrieveAllComputers() {
-        return computerService.findAll();
+    public ResponseEntity<PagedResponse<ComputerDTO>> retrieveAllComputers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") List<String> sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) int ram,
+            @RequestParam(required = false) String disk,
+            @RequestParam(required = false) String core,
+            @RequestParam(required = false) String screenState,
+            @RequestParam(required = false) String keyboardState,
+            @RequestParam(required = false) String shellState,
+            @RequestParam(required = false) String comments) {
+
+        PagedResponse<ComputerDTO> response = computerService.findAll(page, size, sortBy, direction, username, description, ram, disk, core, screenState, keyboardState, shellState, comments);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "/{id}")

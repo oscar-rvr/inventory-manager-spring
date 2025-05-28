@@ -70,12 +70,6 @@ class UserServiceIT {
         assertThat(found).isPresent().contains(saved);
     }
 
-    @Test
-    void whenFindAll_thenReturnsList() {
-        userService.create(user);
-        List<User> all = userService.findAll();
-        assertThat(all).hasSize(1);
-    }
 
     @Test
     void whenUpdate_thenChangesAreSaved() {

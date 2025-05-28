@@ -5,6 +5,8 @@ import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
 import com.grid.inventorymanager.model.Computer;
 import com.grid.inventorymanager.repository.ComputerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,10 @@ public class ComputerService {
         return computerRepository.findById(id);
     }
 
-    public List<Computer> findAll() {
-        return computerRepository.findAll();
+    public Page<Computer> findAll(Pageable pageable) {
+
+
+        return computerRepository.findAll(pageable);
     }
 
     public void update(Computer computer) {

@@ -6,6 +6,7 @@ import com.grid.inventorymanager.model.PurchaseDetail;
 import com.grid.inventorymanager.model.Vendor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.net.URI;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 //oders exceptions
@@ -98,5 +100,19 @@ public class GlobalExceptionHandler {
         pd.setDetail(detail);
         return pd;
     }
+
+    @ExceptionHandler(InvalidFieldNotFoundException.class)
+    public ResponseEntity<ProblemDetail> handleInvalidSortField(InvalidFieldNotFoundException ex) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setType(URI.create("https://api.gridRFC-7807.com/errors/malformed-json"));
+        pd.setTitle("Invalid sort parameter");
+        String detail = ex.getMessage();
+        pd.setDetail(detail);
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(pd);
+    }
+
 //agregar una default
 }

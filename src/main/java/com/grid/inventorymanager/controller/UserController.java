@@ -4,10 +4,7 @@ import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.dto.UserDTO;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.exceptions.UserNotFoundException;
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.Employee;
-import com.grid.inventorymanager.model.User;
-import com.grid.inventorymanager.model.Vendor;
+import com.grid.inventorymanager.model.*;
 import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.repository.UserRepository;
 import com.grid.inventorymanager.service.EmployeeService;
@@ -37,35 +34,12 @@ public class UserController {
     public ResponseEntity<PagedResponse<UserDTO>> retrieveAllUsers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "username") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction) {
+            @RequestParam(defaultValue = "username") List<String> sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) Role role) {
 
-        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<User> usersPage = userService.findAll(pageable);
-
-
-        List<UserDTO> content = usersPage.getContent().stream()
-                .map(user -> {
-                    UserDTO dto = new UserDTO();
-                    dto.setUsername(user.getUsername());
-                    dto.setPassword(user.getPassword());
-                    dto.setRole(user.getRole());
-                    return dto;
-                })
-                .toList();
-
-        PagedResponse<UserDTO> response = new PagedResponse<>(
-                content,
-                usersPage.getNumber(),
-                usersPage.getSize(),
-                usersPage.getTotalElements(),
-                usersPage.getTotalPages(),
-                usersPage.isLast()
-        );
-
+        PagedResponse<UserDTO> response = userService.getAllUsers(page, size, sortBy, direction, username, role);
         return ResponseEntity.ok(response); // retorno corregido
     }
 

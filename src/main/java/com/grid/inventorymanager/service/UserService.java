@@ -1,18 +1,26 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.dto.UserDTO;
+import com.grid.inventorymanager.exceptions.InvalidFieldNotFoundException;
 import com.grid.inventorymanager.exceptions.UserNotFoundException;
 import com.grid.inventorymanager.exceptions.VendorNotFoundException;
+import com.grid.inventorymanager.model.Role;
 import com.grid.inventorymanager.model.User;
 import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.UserRepository;
+import com.grid.inventorymanager.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +36,50 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Page<User> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public PagedResponse<UserDTO> getAllUsers(
+            int page, int size, List<String> sortBy, String direction,
+            String username, Role role) {
+
+        // Paso 1: construir Specification dinámica
+        Specification<User> spec = Specification.where(null);
+
+        if (username != null && !username.isBlank()) {
+            spec = spec.and(UserSpecification.hasUsername(username));
+        }
+
+        if (role != null) {
+            spec = spec.and(UserSpecification.hasRole(role.toString()));
+        }
+
+        // Paso 2: construir ordenamiento
+        Sort sort = Sort.by(sortBy.stream()
+                .map(field -> direction.equalsIgnoreCase("desc")
+                        ? Sort.Order.desc(field)
+                        : Sort.Order.asc(field))
+                .toList());
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<User> userPage = userRepository.findAll(spec, pageable);
+
+        List<UserDTO> content = userPage.getContent().stream()
+                .map(user -> {
+                    UserDTO dto = new UserDTO();
+                    dto.setUsername(user.getUsername());
+                    dto.setPassword(user.getPassword());
+                    dto.setRole(user.getRole());
+                    return dto;
+                })
+                .toList();
+
+        return new PagedResponse<>(
+                content,
+                userPage.getNumber(),
+                userPage.getSize(),
+                userPage.getTotalElements(),
+                userPage.getTotalPages(),
+                userPage.isLast()
+        );
     }
 
     public User update(User user) {
