@@ -16,4 +16,4 @@ services:
       - pg_data_prod:/var/lib/postgresql/data
 
 volumes:
-    pg_data_prod:
+  pg_data_prod:

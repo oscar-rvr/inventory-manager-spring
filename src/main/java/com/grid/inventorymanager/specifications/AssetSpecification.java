@@ -1,7 +1,6 @@
 package com.grid.inventorymanager.specifications;
 
 import com.grid.inventorymanager.model.Asset;
-import com.grid.inventorymanager.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
 public class AssetSpecification {

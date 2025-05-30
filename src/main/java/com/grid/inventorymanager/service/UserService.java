@@ -2,12 +2,9 @@ package com.grid.inventorymanager.service;
 
 import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.dto.UserDTO;
-import com.grid.inventorymanager.exceptions.InvalidFieldNotFoundException;
 import com.grid.inventorymanager.exceptions.UserNotFoundException;
-import com.grid.inventorymanager.exceptions.VendorNotFoundException;
 import com.grid.inventorymanager.model.Role;
 import com.grid.inventorymanager.model.User;
-import com.grid.inventorymanager.model.Vendor;
 import com.grid.inventorymanager.repository.UserRepository;
 import com.grid.inventorymanager.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -89,15 +85,15 @@ public class UserService {
     public User update(Long id, UserDTO userDTO) {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("id: " + id));
 
-        if(userDTO.getPassword() != null){
+        if (userDTO.getPassword() != null) {
             existingUser.setPassword(userDTO.getPassword());
         }
 
-        if(userDTO.getRole() != null){
+        if (userDTO.getRole() != null) {
             existingUser.setRole(userDTO.getRole());
         }
 
-        if(userDTO.getUsername() != null){
+        if (userDTO.getUsername() != null) {
             existingUser.setUsername(userDTO.getUsername());
         }
 

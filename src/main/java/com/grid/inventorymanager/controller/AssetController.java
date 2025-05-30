@@ -5,7 +5,6 @@ import com.grid.inventorymanager.dto.AssetPatchDTO;
 import com.grid.inventorymanager.exceptions.AssetNotFoundException;
 import com.grid.inventorymanager.model.Asset;
 import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.repository.AssetRepository;
 import com.grid.inventorymanager.service.AssetService;
 import com.grid.inventorymanager.service.UserService;
 import jakarta.validation.Valid;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 

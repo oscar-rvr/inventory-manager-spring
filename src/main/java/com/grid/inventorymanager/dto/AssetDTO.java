@@ -4,9 +4,13 @@ import com.grid.inventorymanager.validation.ValidSN;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 
 @Data
+@SuperBuilder
+@NoArgsConstructor
 public class AssetDTO {
 
     @NotBlank(message = "Name is required")

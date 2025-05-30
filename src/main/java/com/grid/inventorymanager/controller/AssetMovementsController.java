@@ -3,7 +3,10 @@ package com.grid.inventorymanager.controller;
 import com.grid.inventorymanager.dto.AssetMovementsDTO;
 import com.grid.inventorymanager.exceptions.AssetNotFoundException;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
-import com.grid.inventorymanager.model.*;
+import com.grid.inventorymanager.model.Asset;
+import com.grid.inventorymanager.model.AssetMovements;
+import com.grid.inventorymanager.model.AssetMovementsId;
+import com.grid.inventorymanager.model.Employee;
 import com.grid.inventorymanager.service.AssetMovementsService;
 import com.grid.inventorymanager.service.AssetService;
 import com.grid.inventorymanager.service.EmployeeService;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController

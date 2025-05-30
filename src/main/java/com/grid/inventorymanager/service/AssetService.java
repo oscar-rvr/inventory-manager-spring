@@ -34,13 +34,13 @@ public class AssetService {
     public Asset update(Long id, AssetPatchDTO dto) {
         Asset existingAsset = assetRepository.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
 
-        if(dto.getName() != null) {
+        if (dto.getName() != null) {
             existingAsset.setName(dto.getName());
         }
-        if(dto.getDescription() != null) {
+        if (dto.getDescription() != null) {
             existingAsset.setDescription(dto.getDescription());
         }
-        if(dto.getSeriesNumber() != null) {
+        if (dto.getSeriesNumber() != null) {
             existingAsset.setSeriesNumber(dto.getSeriesNumber());
         }
         return assetRepository.save(existingAsset);

@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 @Rollback
 @Disabled("need to update")
-
 class VendorServiceIT {
 
     @Autowired

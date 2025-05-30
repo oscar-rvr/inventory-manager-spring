@@ -2,7 +2,6 @@ package com.grid.inventorymanager.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import lombok.Data;
 
 import java.lang.annotation.*;
 

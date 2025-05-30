@@ -4,24 +4,19 @@ import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.dto.UserDTO;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.exceptions.UserNotFoundException;
-import com.grid.inventorymanager.model.*;
-import com.grid.inventorymanager.repository.EmployeeRepository;
-import com.grid.inventorymanager.repository.UserRepository;
+import com.grid.inventorymanager.model.Employee;
+import com.grid.inventorymanager.model.Role;
+import com.grid.inventorymanager.model.User;
 import com.grid.inventorymanager.service.EmployeeService;
 import com.grid.inventorymanager.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @RestController

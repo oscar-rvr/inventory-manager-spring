@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
@@ -34,13 +32,13 @@ public class EmployeeService {
     }
 
     public Employee update(Long id, EmployeePatchDTO employeePatchDTO) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("id : "+id));
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("id : " + id));
 
-        if(employeePatchDTO.getMail() != null) {
+        if (employeePatchDTO.getMail() != null) {
             employee.setMail(employeePatchDTO.getMail());
         }
 
-        if(employeePatchDTO.getName() != null) {
+        if (employeePatchDTO.getName() != null) {
             employee.setName(employeePatchDTO.getName());
         }
 

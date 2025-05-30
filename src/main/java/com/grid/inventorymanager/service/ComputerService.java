@@ -1,16 +1,23 @@
 package com.grid.inventorymanager.service;
 
+import com.grid.inventorymanager.dto.ComputerDTO;
 import com.grid.inventorymanager.dto.ComputerPatchDTO;
+import com.grid.inventorymanager.dto.PagedResponse;
 import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
 import com.grid.inventorymanager.model.Computer;
 import com.grid.inventorymanager.repository.ComputerRepository;
+import com.grid.inventorymanager.specifications.ComputerSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +32,70 @@ public class ComputerService {
         return computerRepository.findById(id);
     }
 
-    public Page<Computer> findAll(Pageable pageable) {
+    public PagedResponse<ComputerDTO> findAll(int page,
+                                              int size,
+                                              List<String> sortBy,
+                                              String direction,
+                                              String name,
+                                              String description,
+                                              Integer ram,
+                                              Integer disk,
+                                              String core,
+                                              String screenState,
+                                              String seriesNumber,
+                                              String keyboardState,
+                                              String shellState,
+                                              String comments) {
+
+        Specification<Computer> spec = Specification.where(null);
+
+        if (name != null && !name.isBlank())
+            spec = spec.and(ComputerSpecification.hasName(name));
+        if (description != null && !description.isBlank())
+            spec = spec.and(ComputerSpecification.hasDescription(description));
+        if (ram != null)
+            spec = spec.and(ComputerSpecification.hasRam(ram));
+        if (disk != null)
+            spec = spec.and(ComputerSpecification.hasDisk(disk));
+        if (core != null && !core.isBlank())
+            spec = spec.and(ComputerSpecification.hasCore(core));
+        if (seriesNumber != null && !seriesNumber.isBlank())
+            spec = spec.and(ComputerSpecification.hasSeriesNumber(seriesNumber));
+
+        Sort sort = Sort.by(sortBy.stream()
+                .map(field -> direction.equalsIgnoreCase("desc")
+                        ? Sort.Order.desc(field)
+                        : Sort.Order.asc(field))
+                .toList());
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Computer> computers = computerRepository.findAll(spec, pageable);
+
+        List<ComputerDTO> content = computers.getContent().stream()
+                .map(c -> ComputerDTO.builder()
+                        .name(c.getName())
+                        .description(c.getDescription())
+                        .seriesNumber(c.getSeriesNumber())
+                        .ram(c.getRam())
+                        .disk(c.getDisk())
+                        .core(c.getCore())
+                        .screenState(c.getScreenState())
+                        .keyboardState(c.getKeyboardState())
+                        .shellState(c.getShellState())
+                        .comments(c.getComments())
+                        .build())
+                .collect(Collectors.toList());
 
 
-        return computerRepository.findAll(pageable);
+        return new PagedResponse<>(content,
+                computers.getNumber(),
+                computers.getSize(),
+                computers.getTotalElements(),
+                computers.getTotalPages(),
+                computers.isLast());
     }
+
 
     public void update(Computer computer) {
         computerRepository.save(computer);

@@ -1,7 +1,7 @@
 package com.grid.inventorymanager.dto;
 
-import com.grid.inventorymanager.validation.ValidSN;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

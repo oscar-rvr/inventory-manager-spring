@@ -1,6 +1,5 @@
 package com.grid.inventorymanager.specifications;
 
-import com.grid.inventorymanager.model.Asset;
 import com.grid.inventorymanager.model.Computer;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -28,7 +27,7 @@ public class ComputerSpecification {
         return (root, query, cb) -> cb.like(root.get("core"), "%" + core + "%");
     }
 
-    public static Specification<Computer> hasdisk(int disk) {
+    public static Specification<Computer> hasDisk(int disk) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("disk"), disk);
     }

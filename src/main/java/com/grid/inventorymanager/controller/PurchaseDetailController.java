@@ -7,13 +7,12 @@ import com.grid.inventorymanager.service.PurchaseDetailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
 @RestController
 @RequestMapping("/v1/purchase-details")
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class PurchaseDetailController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PurchaseDetail> update(@PathVariable Long id,@Valid @RequestBody PurchaseDetailDTO detail) {
+    public ResponseEntity<PurchaseDetail> update(@PathVariable Long id, @Valid @RequestBody PurchaseDetailDTO detail) {
         PurchaseDetail updatedDetail = purchaseDetailService.update(id, detail);
         return ResponseEntity.ok(updatedDetail);
     }

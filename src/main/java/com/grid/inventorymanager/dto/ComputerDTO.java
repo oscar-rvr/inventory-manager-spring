@@ -1,18 +1,20 @@
 package com.grid.inventorymanager.dto;
 
-import com.grid.inventorymanager.validation.ValidSN;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ComputerDTO extends AssetDTO  {
+@SuperBuilder
+public class ComputerDTO extends AssetDTO {
     @NotNull(message = "RAM is required")
     @Min(value = 1, message = "RAM must be at least 1 GB")
     private Integer ram;

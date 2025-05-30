@@ -5,8 +5,6 @@ import com.grid.inventorymanager.dto.EmployeePatchDTO;
 import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
 import com.grid.inventorymanager.model.AssetMovements;
 import com.grid.inventorymanager.model.Employee;
-import com.grid.inventorymanager.model.User;
-import com.grid.inventorymanager.repository.EmployeeRepository;
 import com.grid.inventorymanager.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +64,8 @@ public class EmployeeController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeePatchDTO employeePatchDTO) {
-       employeeService.update(id, employeePatchDTO);
-       return ResponseEntity.ok().build();
+        employeeService.update(id, employeePatchDTO);
+        return ResponseEntity.ok().build();
     }
 
 }
