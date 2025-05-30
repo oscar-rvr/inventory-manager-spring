@@ -17,17 +17,19 @@
           <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.4/spring-boot-configuration-processor-3.4.4.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="users" />
-        <module name="assets" />
+        <module name="inventorymanager (2)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="assets" target="17" />
       <module name="untitled" target="23" />
+      <module name="users" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="assets" options="-parameters" />
+      <module name="inventorymanager (2)" options="-parameters" />
       <module name="users" options="-parameters" />
     </option>
   </component>
