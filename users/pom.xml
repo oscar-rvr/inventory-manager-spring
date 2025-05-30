@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.grid</groupId>
-    <artifactId>inventorymanager</artifactId>
+    <artifactId>users</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>InventoryManagerSpring</name>
     <description>Inventory management system</description>
