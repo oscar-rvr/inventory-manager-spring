@@ -1,0 +1,5 @@
+com/grid/inventorymanager/services/PurchaseDetailServiceIT.class
+com/grid/inventorymanager/services/EmployeeServiceIT.class
+com/grid/inventorymanager/services/UserServiceIT.class
+com/grid/inventorymanager/controllers/UserControllerTest.class
+com/grid/inventorymanager/controllers/EmployeeControllerTest.class
