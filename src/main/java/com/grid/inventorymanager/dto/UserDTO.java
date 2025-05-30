@@ -9,7 +9,6 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-
     @NotBlank(message = "Username is required")
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")
     @ValidUsername
@@ -21,5 +20,4 @@ public class UserDTO {
 
     @NotNull(message = "Role is required")
     private Role role;
-
 }

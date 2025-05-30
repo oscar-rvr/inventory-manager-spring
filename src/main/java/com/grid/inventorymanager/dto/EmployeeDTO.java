@@ -15,5 +15,4 @@ public class EmployeeDTO {
     @NotBlank(message = "Email is required")
     @ValidEmail
     private String mail;
-
 }

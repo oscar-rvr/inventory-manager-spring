@@ -22,7 +22,9 @@ public class BootStrapData implements CommandLineRunner {
     private final PurchaseService purchaseService;
     private final VendorService vendorService;
     private final UserService userService;
-
+/*
+THIS IS ONLY FOR TESTING PURPOSES
+*/
     @Override
     public void run(String... args) {
         // Crear empleado

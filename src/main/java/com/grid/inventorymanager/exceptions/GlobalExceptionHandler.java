@@ -111,6 +111,14 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(pd);
     }
+    //excepcion default
+    @ExceptionHandler(Exception.class)
+    public ProblemDetail handleUnexpectedException(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        problemDetail.setTitle("Unexpected error");
+        problemDetail.setType(URI.create("https://api.gridRFC-7807.com/errors/internal"));
+        problemDetail.setDetail("An unexpected error occurred. Please contact support.");
 
-//agregar una default
+        return problemDetail;
+    }
 }

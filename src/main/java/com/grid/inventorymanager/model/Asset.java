@@ -49,7 +49,6 @@ public class Asset {
         );
 
         if (alreadyExists) {
-            // Optionally update movementType or date here if needed
             return;
         }
 

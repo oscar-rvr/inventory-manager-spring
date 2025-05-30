@@ -36,7 +36,6 @@ public class UserService {
             int page, int size, List<String> sortBy, String direction,
             String username, Role role) {
 
-        // Paso 1: construir Specification dinámica
         Specification<User> spec = Specification.where(null);
 
         if (username != null && !username.isBlank()) {
@@ -47,7 +46,6 @@ public class UserService {
             spec = spec.and(UserSpecification.hasRole(role.toString()));
         }
 
-        // Paso 2: construir ordenamiento
         Sort sort = Sort.by(sortBy.stream()
                 .map(field -> direction.equalsIgnoreCase("desc")
                         ? Sort.Order.desc(field)

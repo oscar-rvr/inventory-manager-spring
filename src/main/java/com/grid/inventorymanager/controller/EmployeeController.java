@@ -67,5 +67,4 @@ public class EmployeeController {
         employeeService.update(id, employeePatchDTO);
         return ResponseEntity.ok().build();
     }
-
 }
