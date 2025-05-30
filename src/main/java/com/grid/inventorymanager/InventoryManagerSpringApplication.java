@@ -7,5 +7,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InventoryManagerSpringApplication {
     public static void main(String[] args) {
         SpringApplication.run(InventoryManagerSpringApplication.class, args);
-    }
+    }//micro
 }
