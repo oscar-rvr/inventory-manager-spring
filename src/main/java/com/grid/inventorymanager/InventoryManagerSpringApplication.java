@@ -9,3 +9,4 @@ public class InventoryManagerSpringApplication {
         SpringApplication.run(InventoryManagerSpringApplication.class, args);
     }
 }
+//ms
