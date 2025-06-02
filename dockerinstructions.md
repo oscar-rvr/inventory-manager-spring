@@ -33,3 +33,7 @@ http://localhost:8079/h2-console
 | LOCAL  | http://localhost:8079/h2-console | ---------------- |
 | DEV    | http://localhost:8080/employees  | 5436 -> 5432     |
 | PROD   | http://localhost:8081/employees  | 5433 -> 5432     |
+
+
+./mvnw clean package -pl users-service -am -DskipTests
+docker compose up --build users-service
