@@ -1,6 +1,6 @@
 package com.grid.employees.dto;
 
-import com.grid.inventorymanager.validation.ValidEmail;
+import com.grid.employees.validation.ValidEmail;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;

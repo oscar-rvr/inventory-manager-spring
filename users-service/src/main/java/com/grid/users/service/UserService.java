@@ -14,15 +14,36 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
+    private final WebClient webClient;
+
+    public UserService(UserRepository userRepository, WebClient webClient) {
+        this.userRepository = userRepository;
+        this.webClient = webClient;
+    }
+
+    public void validateEmployeeExists(Long employeeId) {
+        String url = "http://employees-service:8082/v1/employees/" + employeeId;
+
+        webClient.get()
+                .uri(url)
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError(),
+                        response -> Mono.error(new RuntimeException("Employee not found: " + employeeId)))
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+
+
 
     public User create(User user) {
         return userRepository.save(user);

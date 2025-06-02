@@ -1,6 +1,6 @@
 package com.grid.employees.repository;
 
-import com.grid.inventorymanager.model.Employee;
+import com.grid.employees.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

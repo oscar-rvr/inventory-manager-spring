@@ -4,11 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "employees")
@@ -17,8 +13,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"id", "assets", "user"})
+@JsonIgnoreProperties({"id"})
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,57 +24,8 @@ public class Employee {
 
     private String mail;
 
-    @OneToMany(mappedBy = "employee",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<AssetMovements> assets = new HashSet<>();
-
-    @OneToOne(mappedBy = "employee",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private User user;
-
-    public void addAsset(Asset asset) {
-        AssetMovementsId id = new AssetMovementsId();
-        id.setAssetId(asset.getId());
-        id.setEmployeeId(this.id);
-
-        AssetMovements assetMovements = AssetMovements.builder()
-                .id(id)
-                .employee(this)
-                .asset(asset)
-                .assetMovementDate(LocalDate.now())
-                .movementType(MovementType.ASSIGN)
-                .build();
-
-        this.assets.add(assetMovements);
-        asset.getEmployees().add(assetMovements);
-    }
-
-    public void removeAsset(Asset asset) {
-        for (Iterator<AssetMovements> iterator = assets.iterator(); iterator.hasNext(); ) {
-            AssetMovements assetMovements = iterator.next();
-            if (assetMovements.getEmployee().equals(this) && assetMovements.getAsset().equals(asset)) {
-                iterator.remove();
-                assetMovements.getAsset().getEmployees().remove(assetMovements);
-                assetMovements.setEmployee(null);
-                assetMovements.setAsset(null);
-                break;
-            }
-        }
-    }
-
-    public void addUser(User user) {
-        this.user = user;
-        user.setEmployee(this);
-    }
-
-    public void removeUser() {
-        this.user.setEmployee(null);
-        this.user = null;
-    }
+    @Column(name = "user_id", unique = true)
+    private Long userId;
 
     @Override
     public boolean equals(Object o) {

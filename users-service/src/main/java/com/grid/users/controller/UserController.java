@@ -43,6 +43,9 @@ public class UserController {
 
     @PostMapping("/{employeeId}")
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO, @PathVariable Long employeeId) {
+
+        userService.validateEmployeeExists(employeeId);
+
         User user = User.builder()
                 .username(userDTO.getUsername())
                 .password(userDTO.getPassword())

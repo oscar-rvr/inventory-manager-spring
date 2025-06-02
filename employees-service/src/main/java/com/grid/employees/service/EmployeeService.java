@@ -1,9 +1,9 @@
 package com.grid.employees.service;
 
-import com.grid.inventorymanager.dto.EmployeePatchDTO;
-import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
-import com.grid.inventorymanager.model.Employee;
-import com.grid.inventorymanager.repository.EmployeeRepository;
+import com.grid.employees.dto.EmployeePatchDTO;
+import com.grid.employees.exceptions.EmployeeNotFoundException;
+import com.grid.employees.model.Employee;
+import com.grid.employees.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,10 @@
 package com.grid.employees.controller;
 
-import com.grid.inventorymanager.dto.EmployeeDTO;
-import com.grid.inventorymanager.dto.EmployeePatchDTO;
-import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.Employee;
-import com.grid.inventorymanager.service.EmployeeService;
+import com.grid.employees.dto.EmployeeDTO;
+import com.grid.employees.dto.EmployeePatchDTO;
+import com.grid.employees.exceptions.EmployeeNotFoundException;
+import com.grid.employees.model.Employee;
+import com.grid.employees.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -53,13 +52,6 @@ public class EmployeeController {
     @DeleteMapping(path = "/{id}")
     public void deleteEmployee(@PathVariable Long id) {
         employeeService.deletedById(id);
-    }
-
-    @GetMapping(path = "/{id}/movements")
-    public Set<AssetMovements> retrieveAll(@PathVariable Long id) {
-        return employeeService.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("id: " + id))
-                .getAssets();
     }
 
     @PatchMapping("/{id}")
