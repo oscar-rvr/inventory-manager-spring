@@ -1,6 +1,6 @@
 package com.grid.assets.specifications;
 
-import com.grid.inventorymanager.model.Computer;
+import com.grid.assets.model.Computer;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ComputerSpecification {

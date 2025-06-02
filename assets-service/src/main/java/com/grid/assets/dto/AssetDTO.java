@@ -1,6 +1,6 @@
 package com.grid.assets.dto;
 
-import com.grid.inventorymanager.validation.ValidSN;
+import com.grid.assets.validation.ValidSN;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;

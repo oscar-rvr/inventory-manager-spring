@@ -1,6 +1,6 @@
 package com.grid.assets.specifications;
 
-import com.grid.inventorymanager.model.Asset;
+import com.grid.assets.model.Asset;
 import org.springframework.data.jpa.domain.Specification;
 
 public class AssetSpecification {

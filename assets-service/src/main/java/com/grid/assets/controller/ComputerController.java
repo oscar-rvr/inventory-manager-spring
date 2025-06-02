@@ -1,12 +1,11 @@
 package com.grid.assets.controller;
 
-import com.grid.inventorymanager.dto.ComputerDTO;
-import com.grid.inventorymanager.dto.ComputerPatchDTO;
-import com.grid.inventorymanager.dto.PagedResponse;
-import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.Computer;
-import com.grid.inventorymanager.service.ComputerService;
+import com.grid.assets.dto.ComputerDTO;
+import com.grid.assets.dto.ComputerPatchDTO;
+import com.grid.common.dto.PagedResponse;
+import com.grid.assets.exceptions.ComputerNotFoundException;
+import com.grid.assets.model.Computer;
+import com.grid.assets.service.ComputerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -78,12 +77,17 @@ public class ComputerController {
         computerService.deleteById(id);
     }
 
+    //este va con assets movments
     @GetMapping(path = "/{id}/movements")
-    public Set<AssetMovements> retrieveAll(@PathVariable Long id) {
-        return computerService.findById(id)
-                .orElseThrow(() -> new ComputerNotFoundException("id: " + id))
-                .getEmployees();
+    public List<AssetMovementsDTO> getMovementsForAsset(@PathVariable Long id) {
+        return webClient.get()
+                .uri("http://asset-movements-service:8080/v1/asset-movements/asset/" + id)
+                .retrieve()
+                .bodyToFlux(AssetMovementsDTO.class)
+                .collectList()
+                .block();
     }
+
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<Void> updateComputerPartially(@PathVariable Long id, @RequestBody @Valid ComputerPatchDTO dto) {

@@ -1,12 +1,13 @@
 package com.grid.assets.service;
 
-import com.grid.inventorymanager.dto.ComputerDTO;
-import com.grid.inventorymanager.dto.ComputerPatchDTO;
-import com.grid.inventorymanager.dto.PagedResponse;
-import com.grid.inventorymanager.exceptions.ComputerNotFoundException;
-import com.grid.inventorymanager.model.Computer;
-import com.grid.inventorymanager.repository.ComputerRepository;
-import com.grid.inventorymanager.specifications.ComputerSpecification;
+import com.grid.assets.dto.ComputerDTO;
+import com.grid.assets.dto.ComputerPatchDTO;
+
+import com.grid.assets.exceptions.ComputerNotFoundException;
+import com.grid.assets.model.Computer;
+import com.grid.common.dto.PagedResponse;
+import com.grid.assets.repository.ComputerRepository;
+import com.grid.assets.specifications.ComputerSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

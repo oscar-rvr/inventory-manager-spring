@@ -1,9 +1,9 @@
 package com.grid.assets.service;
 
-import com.grid.inventorymanager.dto.AssetPatchDTO;
-import com.grid.inventorymanager.exceptions.AssetNotFoundException;
-import com.grid.inventorymanager.model.Asset;
-import com.grid.inventorymanager.repository.AssetRepository;
+import com.grid.assets.dto.AssetPatchDTO;
+import com.grid.assets.exceptions.AssetNotFoundException;
+import com.grid.assets.model.Asset;
+import com.grid.assets.repository.AssetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
