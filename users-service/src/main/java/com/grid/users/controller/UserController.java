@@ -7,12 +7,13 @@ import com.grid.users.exceptions.UserNotFoundException;
 import com.grid.users.model.Role;
 import com.grid.users.model.User;
 import com.grid.users.service.UserService;
-import jakarta.validation.Valid;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 

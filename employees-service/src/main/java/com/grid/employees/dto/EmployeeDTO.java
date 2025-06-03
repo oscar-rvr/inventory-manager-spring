@@ -1,9 +1,10 @@
 package com.grid.employees.dto;
 
 import com.grid.employees.validation.ValidEmail;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 public class EmployeeDTO {

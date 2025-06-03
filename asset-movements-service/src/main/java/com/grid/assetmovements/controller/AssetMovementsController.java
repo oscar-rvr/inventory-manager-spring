@@ -6,7 +6,7 @@ import com.grid.assetmovements.exceptions.EmployeeNotFoundException;
 import com.grid.assetmovements.model.AssetMovements;
 import com.grid.assetmovements.model.AssetMovementsId;
 import com.grid.assetmovements.service.AssetMovementsService;
-import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 

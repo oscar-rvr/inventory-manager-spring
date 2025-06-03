@@ -1,7 +1,8 @@
 package com.grid.assets.dto;
 
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import javax.validation.constraints.Size;
 
 @Data
 public class AssetPatchDTO {

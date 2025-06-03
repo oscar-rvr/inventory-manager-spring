@@ -5,12 +5,12 @@ import com.grid.employees.dto.EmployeePatchDTO;
 import com.grid.employees.exceptions.EmployeeNotFoundException;
 import com.grid.employees.model.Employee;
 import com.grid.employees.service.EmployeeService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 

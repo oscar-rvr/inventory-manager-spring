@@ -6,13 +6,13 @@ import com.grid.assets.dto.AssetPatchDTO;
 import com.grid.assets.exceptions.AssetNotFoundException;
 import com.grid.assets.model.Asset;
 import com.grid.assets.service.AssetService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
