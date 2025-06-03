@@ -4,7 +4,6 @@ import com.grid.assets.model.Computer;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ComputerSpecification {
-
     public static Specification<Computer> hasName(String name) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("name"), name);
@@ -31,5 +30,4 @@ public class ComputerSpecification {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("disk"), disk);
     }
-
 }

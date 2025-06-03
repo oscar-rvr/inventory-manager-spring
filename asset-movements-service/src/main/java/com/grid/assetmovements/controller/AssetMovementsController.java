@@ -5,7 +5,6 @@ import com.grid.assetmovements.exceptions.AssetNotFoundException;
 import com.grid.assetmovements.exceptions.EmployeeNotFoundException;
 import com.grid.assetmovements.model.AssetMovements;
 import com.grid.assetmovements.model.AssetMovementsId;
-import com.grid.assetmovements.model.MovementType;
 import com.grid.assetmovements.service.AssetMovementsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -16,7 +17,6 @@ import java.util.Objects;
 @Builder
 @JsonIgnoreProperties({"id", "password"})
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

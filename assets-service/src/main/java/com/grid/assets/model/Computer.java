@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @PrimaryKeyJoinColumn(name = "asset_id")
 public class Computer extends Asset {
-
     private Integer ram;
 
     private Integer disk;

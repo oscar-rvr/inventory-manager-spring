@@ -5,7 +5,6 @@ import com.grid.assets.dto.AssetMovementDTO;
 import com.grid.assets.dto.AssetPatchDTO;
 import com.grid.assets.exceptions.AssetNotFoundException;
 import com.grid.assets.model.Asset;
-
 import com.grid.assets.service.AssetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ public class AssetController {
 
     private final AssetService assetService;
     private final WebClient webClient;
-
 
 
     @GetMapping

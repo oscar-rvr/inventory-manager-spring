@@ -7,17 +7,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * DTO for PATCH operations on Computer.
- * All fields are optional to allow partial updates.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ComputerPatchDTO {
 
-    // Optional fields inherited from Asset
     @Size(max = 100, message = "Name must be at most 100 characters")
     private String name;
 

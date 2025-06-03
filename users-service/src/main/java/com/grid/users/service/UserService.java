@@ -7,7 +7,6 @@ import com.grid.users.model.Role;
 import com.grid.users.model.User;
 import com.grid.users.repository.UserRepository;
 import com.grid.users.specifications.UserSpecification;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,17 +32,8 @@ public class UserService {
     public void validateEmployeeExists(Long employeeId) {
         String url = "http://employees-service:8082/v1/employees/" + employeeId;
 
-        webClient.get()
-                .uri(url)
-                .retrieve()
-                .onStatus(status -> status.is4xxClientError(),
-                        response -> Mono.error(new RuntimeException("Employee not found: " + employeeId)))
-                .bodyToMono(Void.class)
-                .block();
+        webClient.get().uri(url).retrieve().onStatus(status -> status.is4xxClientError(), response -> Mono.error(new RuntimeException("Employee not found: " + employeeId))).bodyToMono(Void.class).block();
     }
-
-
-
 
     public User create(User user) {
         return userRepository.save(user);
@@ -53,9 +43,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public PagedResponse<UserDTO> getAllUsers(
-            int page, int size, List<String> sortBy, String direction,
-            String username, Role role) {
+    public PagedResponse<UserDTO> getAllUsers(int page, int size, List<String> sortBy, String direction, String username, Role role) {
 
         Specification<User> spec = Specification.where(null);
 
@@ -67,34 +55,21 @@ public class UserService {
             spec = spec.and(UserSpecification.hasRole(role.toString()));
         }
 
-        Sort sort = Sort.by(sortBy.stream()
-                .map(field -> direction.equalsIgnoreCase("desc")
-                        ? Sort.Order.desc(field)
-                        : Sort.Order.asc(field))
-                .toList());
+        Sort sort = Sort.by(sortBy.stream().map(field -> direction.equalsIgnoreCase("desc") ? Sort.Order.desc(field) : Sort.Order.asc(field)).toList());
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Page<User> userPage = userRepository.findAll(spec, pageable);
 
-        List<UserDTO> content = userPage.getContent().stream()
-                .map(user -> {
-                    UserDTO dto = new UserDTO();
-                    dto.setUsername(user.getUsername());
-                    dto.setPassword(user.getPassword());
-                    dto.setRole(user.getRole());
-                    return dto;
-                })
-                .toList();
+        List<UserDTO> content = userPage.getContent().stream().map(user -> {
+            UserDTO dto = new UserDTO();
+            dto.setUsername(user.getUsername());
+            dto.setPassword(user.getPassword());
+            dto.setRole(user.getRole());
+            return dto;
+        }).toList();
 
-        return new PagedResponse<>(
-                content,
-                userPage.getNumber(),
-                userPage.getSize(),
-                userPage.getTotalElements(),
-                userPage.getTotalPages(),
-                userPage.isLast()
-        );
+        return new PagedResponse<>(content, userPage.getNumber(), userPage.getSize(), userPage.getTotalElements(), userPage.getTotalPages(), userPage.isLast());
     }
 
     public User update(User user) {

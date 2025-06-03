@@ -62,7 +62,6 @@ public class AssetService {
         return assetRepository.save(existingAsset);
     }
 
-
     public void deletedById(Long id) {
         assetRepository.deleteById(id);
     }
