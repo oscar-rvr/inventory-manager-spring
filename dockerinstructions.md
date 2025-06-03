@@ -1,39 +1,23 @@
-# Instrucciones para levantar el contenedor de produccion y desarrollo
+# Inventory Manager - Microservices
 
-## PRODUCCION
+Este proyecto contiene una arquitectura de microservicios basada en Spring Boot para gestionar usuarios, empleados, activos y movimientos de activos.
 
-Existe el archivo ``` .env.prod ``` este contiene los las credenciales para levantar el ``` .yml ```
-debido a que existen tambien los archivo de desarollo se debe hacer especificar donde estan las conexiones.
-con:
+## Microservicios incluidos
 
-``` 
-docker-compose --env-file ./.env.prod -f docker-compose.prod.yml up -d
+- **users-service** (`8083`)
+- **employees-service** (`8082`)
+- **assets-service** (`8081`)
+- **asset-movements-service** (`8080`)
+- **postgres** (base de datos compartida `managementDB`)
+
+## Cómo levantar el sistema completo
+
+1. Compilar los JARs (desde la raíz):
+
 ```
-
-## DESARROLLO
-
-Para levantar el contenedor de desarollo solo necesitas usar el comando de siempre
-
+mvn clean package 
 ```
-docker-compose --env-file ./.env -f docker-compose.yml up -d
+2. Construir y levantar los contenedores:
 ```
-
-## LOCAL
-
-Para usar el perfil local que funciona con h2, se cambia en properties el activo y se accede con
-
-``` 
-http://localhost:8079/h2-console
+docker compose up --build
 ```
-
-## ESTRUCTURA
-
-| PERFIL | APP                              | PUERTO -> DOCKER |
-|--------|----------------------------------|------------------|
-| LOCAL  | http://localhost:8079/h2-console | ---------------- |
-| DEV    | http://localhost:8080/employees  | 5436 -> 5432     |
-| PROD   | http://localhost:8081/employees  | 5433 -> 5432     |
-
-
-./mvnw clean package -pl users-service -am -DskipTests
-docker compose up --build users-service
