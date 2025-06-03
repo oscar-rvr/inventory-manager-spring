@@ -6,14 +6,30 @@ import com.grid.assets.model.Asset;
 import com.grid.assets.repository.AssetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class AssetService {
     private final AssetRepository assetRepository;
+    private final WebClient.Builder webClientBuilder;
+
+    public Set<?> getMovementsByAssetId(Long assetId) {
+        String url = "http://employees-service:8082/v1/employees/assets/" + assetId;
+
+        return webClientBuilder.build()
+                .get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(Set.class)
+                .onErrorResume(ex -> Mono.error(new RuntimeException("Failed to fetch asset movements", ex)))
+                .block();
+    }
 
     public Asset create(Asset asset) {
         return assetRepository.save(asset);

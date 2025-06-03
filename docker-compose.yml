@@ -55,6 +55,19 @@ services:
       SPRING_DATASOURCE_PASSWORD: i2345678
       SPRING_PROFILES_ACTIVE: docker
 
+  asset-movements-service:
+    build:
+      context: ./asset-movements-service
+    container_name: asset-movements-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/managementDB
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: i2345678
+      SPRING_PROFILES_ACTIVE: docker
 
 volumes:
   pgdata:

@@ -1,7 +1,7 @@
 package com.grid.assetmovements.repository;
 
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.AssetMovementsId;
+import com.grid.assetmovements.model.AssetMovements;
+import com.grid.assetmovements.model.AssetMovementsId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,21 +1,20 @@
 package com.grid.assetmovements.controller;
 
-import com.grid.inventorymanager.dto.AssetMovementsDTO;
-import com.grid.inventorymanager.exceptions.AssetNotFoundException;
-import com.grid.inventorymanager.exceptions.EmployeeNotFoundException;
-import com.grid.inventorymanager.model.Asset;
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.AssetMovementsId;
-import com.grid.inventorymanager.model.Employee;
-import com.grid.inventorymanager.service.AssetMovementsService;
-import com.grid.inventorymanager.service.AssetService;
-import com.grid.inventorymanager.service.EmployeeService;
+import com.grid.assetmovements.dto.AssetMovementsDTO;
+import com.grid.assetmovements.exceptions.AssetNotFoundException;
+import com.grid.assetmovements.exceptions.EmployeeNotFoundException;
+import com.grid.assetmovements.model.AssetMovements;
+import com.grid.assetmovements.model.AssetMovementsId;
+import com.grid.assetmovements.model.MovementType;
+import com.grid.assetmovements.service.AssetMovementsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.List;
@@ -26,8 +25,7 @@ import java.util.List;
 public class AssetMovementsController {
 
     private final AssetMovementsService assetMovementsService;
-    private final AssetService assetService;
-    private final EmployeeService employeeService;
+    private final WebClient webClient;
 
     @GetMapping
     public List<AssetMovements> showAssetMovements() {
@@ -58,9 +56,7 @@ public class AssetMovementsController {
 
     @GetMapping("/{assetId}/{employeeId}")
     public List<AssetMovements> showSpecificAssetMovements(@PathVariable Long assetId, @PathVariable Long employeeId) {
-        AssetMovementsId id = new AssetMovementsId();
-        id.setAssetId(assetId);
-        id.setEmployeeId(employeeId);
+        AssetMovementsId id = new AssetMovementsId(assetId, employeeId);
 
         AssetMovements assetMovements = new AssetMovements();
         assetMovements.setId(id);
@@ -70,24 +66,43 @@ public class AssetMovementsController {
 
     @PostMapping
     public ResponseEntity<AssetMovements> createMovement(@Valid @RequestBody AssetMovementsDTO dto) {
-        Asset asset = assetService.findById(dto.getAssetId())
-                .orElseThrow(() -> new AssetNotFoundException("id: " + dto.getAssetId()));
-        Employee employee = employeeService.findById(dto.getEmployeeId())
-                .orElseThrow(() -> new EmployeeNotFoundException("id: " + dto.getEmployeeId()));
+
+        validateEmployeeExists(dto.getEmployeeId());
+        validateAssetExists(dto.getAssetId());
 
         AssetMovements assetMovements = AssetMovements.builder()
-                .id(new AssetMovementsId(dto.getAssetId(), dto.getEmployeeId()))
-                .asset(asset)
-                .employee(employee)
-                .movementType(dto.getMovementType())
+                .id(new AssetMovementsId(dto.getEmployeeId(), dto.getAssetId()))
                 .assetMovementDate(dto.getAssetMovementDate())
+                .movementType(dto.getMovementType())
                 .build();
 
         AssetMovements saved = assetMovementsService.create(assetMovements);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("").build().toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
         return ResponseEntity.created(location).body(saved);
     }
 
+    private void validateEmployeeExists(Long employeeId) {
+        String url = "http://employees-service:8082/v1/employees/" + employeeId;
+
+        webClient.get()
+                .uri(url)
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError(),
+                        response -> Mono.error(new EmployeeNotFoundException("id: " + employeeId)))
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    private void validateAssetExists(Long assetId) {
+        String url = "http://assets-service:8081/v1/assets/" + assetId;
+
+        webClient.get()
+                .uri(url)
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError(),
+                        response -> Mono.error(new AssetNotFoundException("id: " + assetId)))
+                .bodyToMono(Void.class)
+                .block();
+    }
 }

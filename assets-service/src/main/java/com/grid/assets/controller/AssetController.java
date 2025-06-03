@@ -1,16 +1,17 @@
 package com.grid.assets.controller;
 
-import com.grid.inventorymanager.dto.AssetDTO;
-import com.grid.inventorymanager.dto.AssetPatchDTO;
-import com.grid.inventorymanager.exceptions.AssetNotFoundException;
-import com.grid.inventorymanager.model.Asset;
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.service.AssetService;
-import com.grid.inventorymanager.service.UserService;
+import com.grid.assets.dto.AssetDTO;
+import com.grid.assets.dto.AssetMovementDTO;
+import com.grid.assets.dto.AssetPatchDTO;
+import com.grid.assets.exceptions.AssetNotFoundException;
+import com.grid.assets.model.Asset;
+
+import com.grid.assets.service.AssetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -23,7 +24,9 @@ import java.util.Set;
 public class AssetController {
 
     private final AssetService assetService;
-    private final UserService userService;
+    private final WebClient webClient;
+
+
 
     @GetMapping
     public List<Asset> retrieveAllAssets() {
@@ -56,10 +59,21 @@ public class AssetController {
     }
 
     @GetMapping(path = "/{id}/movements")
-    public Set<AssetMovements> retrieveAll(@PathVariable Long id) {
-        Asset asset = assetService.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
-        return asset.getEmployees();
+    public Set<AssetMovementDTO> retrieveAll(@PathVariable Long id) {
+        Asset asset = assetService.findById(id)
+                .orElseThrow(() -> new AssetNotFoundException("id: " + id));
+
+        String url = "http://asset-movements-service:8084/v1/movements/asset/" + id;
+
+        AssetMovementDTO[] movements = webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(AssetMovementDTO[].class)
+                .block();
+
+        return Set.of(movements);
     }
+
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Asset> updateAsset(@PathVariable Long id, @RequestBody AssetPatchDTO assetDTO) {

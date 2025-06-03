@@ -1,11 +1,7 @@
 package com.grid.assetmovements.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -16,8 +12,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"asset", "employee"})
 public class AssetMovements {
+
     @EmbeddedId
     private AssetMovementsId id;
 
@@ -26,27 +22,20 @@ public class AssetMovements {
 
     private LocalDate assetMovementDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("assetId")
-    private Asset asset;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("employeeId")
-    private Employee employee;
-
     @Override
     public String toString() {
         return "AssetMovements{" +
-                "employeeId=" + (employee != null ? employee.getId() : null) +
-                ", assetId=" + (asset != null ? asset.getId() : null) +
+                "employeeId=" + (id != null ? id.getEmployeeId() : null) +
+                ", assetId=" + (id != null ? id.getAssetId() : null) +
+                ", movementType=" + movementType +
+                ", date=" + assetMovementDate +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AssetMovements that = (AssetMovements) o;
+        if (!(o instanceof AssetMovements that)) return false;
         return Objects.equals(id, that.id);
     }
 
@@ -55,4 +44,3 @@ public class AssetMovements {
         return Objects.hash(id);
     }
 }
-

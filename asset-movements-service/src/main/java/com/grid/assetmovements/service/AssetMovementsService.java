@@ -1,8 +1,8 @@
 package com.grid.assetmovements.service;
 
-import com.grid.inventorymanager.model.AssetMovements;
-import com.grid.inventorymanager.model.AssetMovementsId;
-import com.grid.inventorymanager.repository.AssetMovementsRepository;
+import com.grid.assetmovements.model.AssetMovements;
+import com.grid.assetmovements.model.AssetMovementsId;
+import com.grid.assetmovements.repository.AssetMovementsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;

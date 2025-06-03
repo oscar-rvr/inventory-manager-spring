@@ -2,6 +2,7 @@ package com.grid.assets.controller;
 
 import com.grid.assets.dto.ComputerDTO;
 import com.grid.assets.dto.ComputerPatchDTO;
+import com.grid.common.dto.AssetMovementsDTO;
 import com.grid.common.dto.PagedResponse;
 import com.grid.assets.exceptions.ComputerNotFoundException;
 import com.grid.assets.model.Computer;
@@ -10,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -22,6 +24,7 @@ import java.util.Set;
 public class ComputerController {
 
     private final ComputerService computerService;
+    private final WebClient webClient;
 
     @GetMapping
     public ResponseEntity<PagedResponse<ComputerDTO>> retrieveAllComputers(
@@ -94,4 +97,6 @@ public class ComputerController {
         computerService.update(id, dto);
         return ResponseEntity.noContent().build();
     }
+
+
 }

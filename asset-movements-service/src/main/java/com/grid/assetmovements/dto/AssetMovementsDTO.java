@@ -1,10 +1,11 @@
 package com.grid.assetmovements.dto;
 
-import com.grid.inventorymanager.model.MovementType;
+import com.grid.assetmovements.model.MovementType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class AssetMovementsDTO {
@@ -19,5 +20,5 @@ public class AssetMovementsDTO {
     private MovementType movementType;
 
     @NotNull(message = "Asset movement date is required")
-    private LocalDate assetMovementDate;
+    private LocalDate assetMovementDate = LocalDate.now();
 }
