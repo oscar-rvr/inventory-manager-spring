@@ -20,7 +20,7 @@ public class AssetService {
     private final WebClient.Builder webClientBuilder;
 
     public Set<?> getMovementsByAssetId(Long assetId) {
-        String url = "http://employees-service:8082/v1/employees/assets/" + assetId;
+        String url = "http://employees-service/v1/employees/assets/" + assetId;
 
         return webClientBuilder.build()
                 .get()

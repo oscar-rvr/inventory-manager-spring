@@ -10,6 +10,7 @@ import com.grid.assetmovements.service.AssetMovementsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,7 +18,9 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,10 +68,8 @@ public class AssetMovementsController {
     }
 
     @PostMapping
-    public ResponseEntity<AssetMovements> createMovement(@Valid @RequestBody AssetMovementsDTO dto) {
-
-        validateEmployeeExists(dto.getEmployeeId());
-        validateAssetExists(dto.getAssetId());
+    public ResponseEntity<AssetMovements> createMovement(@Valid @RequestBody AssetMovementsDTO dto,
+                                                         @RequestHeader("X-User-Id") Long userId) {
 
         AssetMovements assetMovements = AssetMovements.builder()
                 .id(new AssetMovementsId(dto.getEmployeeId(), dto.getAssetId()))
@@ -76,14 +77,16 @@ public class AssetMovementsController {
                 .movementType(dto.getMovementType())
                 .build();
 
-        AssetMovements saved = assetMovementsService.create(assetMovements);
+        AssetMovements saved = assetMovementsService.create(assetMovements, userId);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
         return ResponseEntity.created(location).body(saved);
     }
 
+
+
     private void validateEmployeeExists(Long employeeId) {
-        String url = "http://employees-service:8082/v1/employees/" + employeeId;
+        String url = "http://employees-service/v1/employees/" + employeeId;
 
         webClient.get()
                 .uri(url)
@@ -95,7 +98,7 @@ public class AssetMovementsController {
     }
 
     private void validateAssetExists(Long assetId) {
-        String url = "http://assets-service:8081/v1/assets/" + assetId;
+        String url = "http://assets-service/v1/assets/" + assetId;
 
         webClient.get()
                 .uri(url)
@@ -105,4 +108,5 @@ public class AssetMovementsController {
                 .bodyToMono(Void.class)
                 .block();
     }
+
 }

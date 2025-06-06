@@ -23,7 +23,8 @@ import java.util.List;
 public class ComputerController {
 
     private final ComputerService computerService;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
+
 
     @GetMapping
     public ResponseEntity<PagedResponse<ComputerDTO>> retrieveAllComputers(
@@ -82,12 +83,14 @@ public class ComputerController {
     //este va con assets movments
     @GetMapping(path = "/{id}/movements")
     public List<AssetMovementsDTO> getMovementsForAsset(@PathVariable Long id) {
-        return webClient.get()
-                .uri("http://asset-movements-service:8080/v1/asset-movements/asset/" + id)
+        return webClientBuilder.build()
+                .get()
+                .uri("http://asset-movements-service/v1/asset-movements/asset/" + id)
                 .retrieve()
                 .bodyToFlux(AssetMovementsDTO.class)
                 .collectList()
                 .block();
+
     }
 
 

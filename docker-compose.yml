@@ -76,6 +76,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: i2345678
       SPRING_PROFILES_ACTIVE: docker
 
+networks:
+  default:
+    name: spring-net
 
 
 volumes:

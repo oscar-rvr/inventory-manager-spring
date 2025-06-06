@@ -17,7 +17,17 @@ Este proyecto contiene una arquitectura de microservicios basada en Spring Boot 
 ```
 mvn clean package 
 ```
-2. Construir y levantar los contenedores:
+2. Construir imgs
 ```
 docker compose up --build
 ```
+3. Levantar las imgs
+
+```
+docker-compose up
+```
+eureka
+http://localhost:8761/
+
+docker stacktrace
+docker logs asset-movements-service

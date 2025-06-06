@@ -23,7 +23,7 @@ import java.util.Set;
 public class AssetController {
 
     private final AssetService assetService;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
 
     @GetMapping
@@ -63,7 +63,7 @@ public class AssetController {
 
         String url = "http://asset-movements-service:8084/v1/movements/asset/" + id;
 
-        AssetMovementDTO[] movements = webClient.get()
+        AssetMovementDTO[] movements = webClientBuilder.build().get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(AssetMovementDTO[].class)
