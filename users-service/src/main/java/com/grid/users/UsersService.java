@@ -1,4 +1,4 @@
-package com.grid;
+package com.grid.users;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

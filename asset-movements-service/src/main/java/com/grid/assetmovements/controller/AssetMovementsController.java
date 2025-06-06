@@ -10,7 +10,6 @@ import com.grid.assetmovements.service.AssetMovementsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,9 +17,7 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +25,7 @@ import java.util.Map;
 public class AssetMovementsController {
 
     private final AssetMovementsService assetMovementsService;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     @GetMapping
     public List<AssetMovements> showAssetMovements() {
@@ -83,12 +80,11 @@ public class AssetMovementsController {
         return ResponseEntity.created(location).body(saved);
     }
 
-
-
     private void validateEmployeeExists(Long employeeId) {
         String url = "http://employees-service/v1/employees/" + employeeId;
 
-        webClient.get()
+        webClientBuilder.build()
+                .get()
                 .uri(url)
                 .retrieve()
                 .onStatus(status -> status.is4xxClientError(),
@@ -100,7 +96,8 @@ public class AssetMovementsController {
     private void validateAssetExists(Long assetId) {
         String url = "http://assets-service/v1/assets/" + assetId;
 
-        webClient.get()
+        webClientBuilder.build()
+                .get()
                 .uri(url)
                 .retrieve()
                 .onStatus(status -> status.is4xxClientError(),
@@ -108,5 +105,17 @@ public class AssetMovementsController {
                 .bodyToMono(Void.class)
                 .block();
     }
+
+    @GetMapping("/test-employees")
+    public Mono<String> testEmployeesService() {
+        return webClientBuilder.build()
+                .get()
+                .uri("http://employees-service/v1/employees/ping")
+                .retrieve()
+                .bodyToMono(String.class)
+                .doOnNext(response -> System.out.println("✅ Response: " + response))
+                .doOnError(error -> System.err.println("❌ Error: " + error.getMessage()));
+    }
+
 
 }

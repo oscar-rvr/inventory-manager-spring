@@ -8,6 +8,7 @@ import com.grid.employees.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -20,6 +21,8 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final WebClient webClient;
+
 
     @GetMapping
     public List<Employee> retrieveAllEmployees() {
@@ -58,4 +61,10 @@ public class EmployeeController {
         employeeService.update(id, employeePatchDTO);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "Hello from Employees Service!";
+    }
+
 }

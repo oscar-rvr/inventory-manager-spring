@@ -28,6 +28,7 @@ services:
       - "8083:8083"
     depends_on:
       - postgres
+      - discovery-server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/managementDB
       SPRING_DATASOURCE_USERNAME: admin
@@ -42,6 +43,7 @@ services:
       - "8082:8082"
     depends_on:
       - postgres
+      - discovery-server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/managementDB
       SPRING_DATASOURCE_USERNAME: admin
@@ -56,6 +58,7 @@ services:
       - "8081:8081"
     depends_on:
       - postgres
+      - discovery-server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/managementDB
       SPRING_DATASOURCE_USERNAME: admin
@@ -70,6 +73,7 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+      - discovery-server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/managementDB
       SPRING_DATASOURCE_USERNAME: admin

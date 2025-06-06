@@ -31,3 +31,14 @@ http://localhost:8761/
 
 docker stacktrace
 docker logs asset-movements-service
+----
+mvn clean install
+docker-compose down
+docker-compose up --build
+
+
+
+----
+Si estás en tu proyecto y usas Mac/Linux, escribe esto en la raíz del proyecto:
+
+tree -L 3 src/main/java
