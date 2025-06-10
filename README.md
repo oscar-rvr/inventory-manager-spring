@@ -38,7 +38,7 @@ public WebClient.Builder webClientBuilder() {
 
 ### 3. Comunicación HTTP entre servicios
 
-#### 🔹 Desde `assets-service`:
+#### Desde `assets-service`:
 
 - [x] Llamada a `asset-movements-service`:
     - Endpoint: `/v1/assets/{id}/movements`
