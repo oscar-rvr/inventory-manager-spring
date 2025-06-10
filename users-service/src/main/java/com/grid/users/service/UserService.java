@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public void validateEmployeeExists(Long employeeId) {
-        String url = "http://employees-service:8082/v1/employees/" + employeeId;
+        String url = "http://employees-service/v1/employees/" + employeeId;
 
         webClient.get().uri(url).retrieve().onStatus(status -> status.is4xxClientError(), response -> Mono.error(new RuntimeException("Employee not found: " + employeeId))).bodyToMono(Void.class).block();
     }

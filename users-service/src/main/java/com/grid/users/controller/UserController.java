@@ -7,7 +7,6 @@ import com.grid.users.exceptions.UserNotFoundException;
 import com.grid.users.model.Role;
 import com.grid.users.model.User;
 import com.grid.users.service.UserService;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +23,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<PagedResponse<UserDTO>> retrieveAllUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "username") List<String> sortBy,
-            @RequestParam(defaultValue = "asc") String direction,
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) Role role) {
+    public ResponseEntity<PagedResponse<UserDTO>> retrieveAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "username") List<String> sortBy, @RequestParam(defaultValue = "asc") String direction, @RequestParam(required = false) String username, @RequestParam(required = false) Role role) {
 
         PagedResponse<UserDTO> response = userService.getAllUsers(page, size, sortBy, direction, username, role);
         return ResponseEntity.ok(response); // retorno corregido
@@ -38,8 +31,7 @@ public class UserController {
 
     @GetMapping(path = "/{id}")
     public User retrieveOneUser(@PathVariable Long id) {
-        return userService.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("id: " + id));
+        return userService.findById(id).orElseThrow(() -> new UserNotFoundException("id: " + id));
     }
 
     @PostMapping("/{employeeId}")
@@ -47,12 +39,7 @@ public class UserController {
 
         userService.validateEmployeeExists(employeeId);
 
-        User user = User.builder()
-                .username(userDTO.getUsername())
-                .password(userDTO.getPassword())
-                .role(userDTO.getRole())
-                .employeeId(employeeId)
-                .build();
+        User user = User.builder().username(userDTO.getUsername()).password(userDTO.getPassword()).role(userDTO.getRole()).employeeId(employeeId).build();
 
         userService.create(user);
 

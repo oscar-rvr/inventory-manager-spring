@@ -15,12 +15,6 @@ public class EmployeeClient {
     public void validateEmployeeExists(Long employeeId) {
         String url = "http://employees-service/v1/employees/" + employeeId;
 
-        webClient.get()
-                .uri(url)
-                .retrieve()
-                .onStatus(status -> status.is4xxClientError(),
-                        response -> Mono.error(new EmployeeNotFoundException("id: " + employeeId)))
-                .bodyToMono(Void.class)
-                .block();
+        webClient.get().uri(url).retrieve().onStatus(status -> status.is4xxClientError(), response -> Mono.error(new EmployeeNotFoundException("id: " + employeeId))).bodyToMono(Void.class).block();
     }
 }

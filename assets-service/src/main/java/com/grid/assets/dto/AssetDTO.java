@@ -1,7 +1,6 @@
 package com.grid.assets.dto;
 
 import com.grid.assets.validation.ValidSN;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

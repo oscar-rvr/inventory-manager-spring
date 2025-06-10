@@ -27,12 +27,7 @@ public class AssetMovements {
 
     @Override
     public String toString() {
-        return "AssetMovements{" +
-                "employeeId=" + (id != null ? id.getEmployeeId() : null) +
-                ", assetId=" + (id != null ? id.getAssetId() : null) +
-                ", movementType=" + movementType +
-                ", date=" + assetMovementDate +
-                '}';
+        return "AssetMovements{" + "employeeId=" + (id != null ? id.getEmployeeId() : null) + ", assetId=" + (id != null ? id.getAssetId() : null) + ", movementType=" + movementType + ", date=" + assetMovementDate + '}';
     }
 
     @Override

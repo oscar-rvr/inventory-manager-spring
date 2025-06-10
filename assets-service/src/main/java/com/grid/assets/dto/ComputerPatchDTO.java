@@ -13,14 +13,12 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class ComputerPatchDTO {
-
     @Size(max = 100, message = "Name must be at most 100 characters")
     private String name;
 
     @Size(max = 255, message = "Description must be at most 255 characters")
     private String description;
 
-    // Optional fields specific to Computer
     @Min(value = 1, message = "RAM must be at least 1 GB")
     private Integer ram;
 

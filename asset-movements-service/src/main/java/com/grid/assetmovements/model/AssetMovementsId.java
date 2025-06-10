@@ -28,8 +28,7 @@ public class AssetMovementsId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AssetMovementsId that = (AssetMovementsId) o;
-        return Objects.equals(employeeId, that.employeeId) &&
-                Objects.equals(assetId, that.assetId);
+        return Objects.equals(employeeId, that.employeeId) && Objects.equals(assetId, that.assetId);
     }
 
     @Override

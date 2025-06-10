@@ -22,13 +22,7 @@ public class AssetService {
     public Set<?> getMovementsByAssetId(Long assetId) {
         String url = "http://employees-service/v1/employees/assets/" + assetId;
 
-        return webClientBuilder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(Set.class)
-                .onErrorResume(ex -> Mono.error(new RuntimeException("Failed to fetch asset movements", ex)))
-                .block();
+        return webClientBuilder.build().get().uri(url).retrieve().bodyToMono(Set.class).onErrorResume(ex -> Mono.error(new RuntimeException("Failed to fetch asset movements", ex))).block();
     }
 
     public Asset create(Asset asset) {

@@ -1,6 +1,6 @@
 # Inventory Manager - Microservices
 
-Este proyecto contiene una arquitectura de microservicios basada en Spring Boot para gestionar usuarios, empleados, activos y movimientos de activos.
+
 
 ## Microservicios incluidos
 
@@ -39,6 +39,5 @@ docker-compose up --build
 
 
 ----
-Si estás en tu proyecto y usas Mac/Linux, escribe esto en la raíz del proyecto:
 
 tree -L 3 src/main/java

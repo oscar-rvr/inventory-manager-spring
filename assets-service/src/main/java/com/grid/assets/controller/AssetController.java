@@ -21,10 +21,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @RequestMapping("/v1/assets")
 public class AssetController {
-
     private final AssetService assetService;
     private final WebClient.Builder webClientBuilder;
-
 
     @GetMapping
     public List<Asset> retrieveAllAssets() {
@@ -38,15 +36,10 @@ public class AssetController {
 
     @PostMapping
     public ResponseEntity<Asset> createAsset(@Valid @RequestBody AssetDTO assetDTO) {
-        Asset asset = Asset.builder()
-                .name(assetDTO.getName())
-                .description(assetDTO.getDescription())
-                .seriesNumber(assetDTO.getSeriesNumber())
-                .build();
+        Asset asset = Asset.builder().name(assetDTO.getName()).description(assetDTO.getDescription()).seriesNumber(assetDTO.getSeriesNumber()).build();
 
         Asset saved = assetService.create(asset);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(saved.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
@@ -58,16 +51,11 @@ public class AssetController {
 
     @GetMapping(path = "/{id}/movements")
     public Set<AssetMovementDTO> retrieveAll(@PathVariable Long id) {
-        Asset asset = assetService.findById(id)
-                .orElseThrow(() -> new AssetNotFoundException("id: " + id));
+        Asset asset = assetService.findById(id).orElseThrow(() -> new AssetNotFoundException("id: " + id));
 
-        String url = "http://asset-movements-service:8084/v1/movements/asset/" + id;
+        String url = "http://asset-movements-service/v1/movements/asset/" + id;
 
-        AssetMovementDTO[] movements = webClientBuilder.build().get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(AssetMovementDTO[].class)
-                .block();
+        AssetMovementDTO[] movements = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(AssetMovementDTO[].class).block();
 
         return Set.of(movements);
     }

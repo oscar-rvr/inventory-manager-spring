@@ -3,7 +3,6 @@ package com.grid.assetmovements.service;
 import com.grid.assetmovements.client.AssetClient;
 import com.grid.assetmovements.client.EmployeeClient;
 import com.grid.assetmovements.client.UserClient;
-import com.grid.assetmovements.dto.UserDTO;
 import com.grid.assetmovements.model.AssetMovements;
 import com.grid.assetmovements.model.AssetMovementsId;
 import com.grid.assetmovements.repository.AssetMovementsRepository;
@@ -48,14 +47,14 @@ public class AssetMovementsService {
     }
 
     public AssetMovements create(AssetMovements assetMovements, Long userId) {
-        userClient.getUserById(userId);
-        assetClient.validateAssetExists(assetMovements.getId().getAssetId());
-        employeeClient.validateEmployeeExists(assetMovements.getId().getEmployeeId());
+        try {
+            userClient.getUserById(userId);
+            assetClient.validateAssetExists(assetMovements.getId().getAssetId());
+            employeeClient.validateEmployeeExists(assetMovements.getId().getEmployeeId());
+        } catch (WebClientResponseException.NotFound ex) {
+            throw new IllegalArgumentException("One of the referenced entities was not found", ex);
+        }
 
         return assetMovementsRepository.save(assetMovements);
     }
-
-
-
-
 }

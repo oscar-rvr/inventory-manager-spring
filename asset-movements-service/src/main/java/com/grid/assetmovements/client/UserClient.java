@@ -17,11 +17,7 @@ public class UserClient {
 
     private final WebClient webClient;
 
-    public UserDTO getUserById(Long userId){
-        return webClient.get()
-                .uri("http://users-service/v1/users/{id}", userId)
-                .retrieve()
-                .bodyToMono(UserDTO.class)
-                .block();
+    public UserDTO getUserById(Long userId) {
+        return webClient.get().uri("http://users-service/v1/users/{id}", userId).retrieve().bodyToMono(UserDTO.class).block();
     }
 }

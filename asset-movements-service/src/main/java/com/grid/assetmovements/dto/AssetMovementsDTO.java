@@ -1,7 +1,6 @@
 package com.grid.assetmovements.dto;
 
 import com.grid.assetmovements.model.MovementType;
-
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

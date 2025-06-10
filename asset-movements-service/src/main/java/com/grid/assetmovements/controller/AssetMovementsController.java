@@ -6,7 +6,6 @@ import com.grid.assetmovements.exceptions.EmployeeNotFoundException;
 import com.grid.assetmovements.model.AssetMovements;
 import com.grid.assetmovements.model.AssetMovementsId;
 import com.grid.assetmovements.service.AssetMovementsService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
@@ -65,14 +64,9 @@ public class AssetMovementsController {
     }
 
     @PostMapping
-    public ResponseEntity<AssetMovements> createMovement(@Valid @RequestBody AssetMovementsDTO dto,
-                                                         @RequestHeader("X-User-Id") Long userId) {
+    public ResponseEntity<AssetMovements> createMovement(@Valid @RequestBody AssetMovementsDTO dto, @RequestHeader("X-User-Id") Long userId) {
 
-        AssetMovements assetMovements = AssetMovements.builder()
-                .id(new AssetMovementsId(dto.getEmployeeId(), dto.getAssetId()))
-                .assetMovementDate(dto.getAssetMovementDate())
-                .movementType(dto.getMovementType())
-                .build();
+        AssetMovements assetMovements = AssetMovements.builder().id(new AssetMovementsId(dto.getEmployeeId(), dto.getAssetId())).assetMovementDate(dto.getAssetMovementDate()).movementType(dto.getMovementType()).build();
 
         AssetMovements saved = assetMovementsService.create(assetMovements, userId);
 
@@ -83,39 +77,18 @@ public class AssetMovementsController {
     private void validateEmployeeExists(Long employeeId) {
         String url = "http://employees-service/v1/employees/" + employeeId;
 
-        webClientBuilder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .onStatus(status -> status.is4xxClientError(),
-                        response -> Mono.error(new EmployeeNotFoundException("id: " + employeeId)))
-                .bodyToMono(Void.class)
-                .block();
+        webClientBuilder.build().get().uri(url).retrieve().onStatus(status -> status.is4xxClientError(), response -> Mono.error(new EmployeeNotFoundException("id: " + employeeId))).bodyToMono(Void.class).block();
     }
 
     private void validateAssetExists(Long assetId) {
         String url = "http://assets-service/v1/assets/" + assetId;
 
-        webClientBuilder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .onStatus(status -> status.is4xxClientError(),
-                        response -> Mono.error(new AssetNotFoundException("id: " + assetId)))
-                .bodyToMono(Void.class)
-                .block();
+        webClientBuilder.build().get().uri(url).retrieve().onStatus(status -> status.is4xxClientError(), response -> Mono.error(new AssetNotFoundException("id: " + assetId))).bodyToMono(Void.class).block();
     }
 
     @GetMapping("/test-employees")
     public Mono<String> testEmployeesService() {
-        return webClientBuilder.build()
-                .get()
-                .uri("http://employees-service/v1/employees/ping")
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnNext(response -> System.out.println("✅ Response: " + response))
-                .doOnError(error -> System.err.println("❌ Error: " + error.getMessage()));
+        return webClientBuilder.build().get().uri("http://employees-service/v1/employees/ping").retrieve().bodyToMono(String.class).doOnNext(response -> System.out.println("✅ Response: " + response)).doOnError(error -> System.err.println("❌ Error: " + error.getMessage()));
     }
-
 
 }

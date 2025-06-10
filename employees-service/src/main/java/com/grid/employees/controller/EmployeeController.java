@@ -31,23 +31,18 @@ public class EmployeeController {
 
     @GetMapping(path = "/{id}")
     public Employee retrieveOneEmployee(@PathVariable Long id) {
-        return employeeService.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("id: " + id));
+        return employeeService.findById(id).orElseThrow(() -> new EmployeeNotFoundException("id: " + id));
     }
 
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
 
         //conversion de DTO a employee
-        Employee employee = Employee.builder()
-                .name(employeeDTO.getName())
-                .mail(employeeDTO.getMail())
-                .build();
+        Employee employee = Employee.builder().name(employeeDTO.getName()).mail(employeeDTO.getMail()).build();
 
         Employee saved = employeeService.create(employee);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(saved.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 

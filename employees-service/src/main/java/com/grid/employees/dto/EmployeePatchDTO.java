@@ -10,5 +10,4 @@ public class EmployeePatchDTO {
 
     @ValidEmail
     private String mail;
-
 }

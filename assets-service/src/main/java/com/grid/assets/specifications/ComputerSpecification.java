@@ -5,8 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ComputerSpecification {
     public static Specification<Computer> hasName(String name) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("name"), name);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"), name);
     }
 
     public static Specification<Computer> hasSeriesNumber(String seriesNumber) {
@@ -18,8 +17,7 @@ public class ComputerSpecification {
     }
 
     public static Specification<Computer> hasRam(int ram) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("ram"), ram);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("ram"), ram);
     }
 
     public static Specification<Computer> hasCore(String core) {
@@ -27,7 +25,6 @@ public class ComputerSpecification {
     }
 
     public static Specification<Computer> hasDisk(int disk) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("disk"), disk);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("disk"), disk);
     }
 }
