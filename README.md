@@ -1,1 +1,1 @@
-add gateway config
+add  optional  config
