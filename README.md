@@ -1,1 +1,1 @@
-add logs with gcp
+add metrics with gcp
